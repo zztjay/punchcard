@@ -35,21 +35,27 @@ public class CampService {
     @Resource
     MembersMapper membersMapper;
 
-    @Deprecated
+
     // 以群为主，后续改为以小程序为主
-    public int getRoleType(Long campId, String wxId){
-       Member member = membersMapper.selectByWxId(wxId,campId);
-       if(null != member){
-           return member.getRoleType();
-       }
-       return Member.ROLE_TYPE_NO_JOIN;
+    public int getRoleType(Long campId, String wxId) {
+        // 是否为创建者角色
+        Camp camp = getCampById(campId);
+        if(null != camp && camp.getCreaterWxId().equals(wxId)){
+            return Member.ROLE_TYPE_CREATER;
+        }
+        // 其他角色
+        Member member = membersMapper.selectByWxId(wxId, campId);
+        if (null != member) {
+            return member.getRoleType();
+        }
+        return Member.ROLE_TYPE_NO_JOIN;
     }
 
     public ApiResponse save(Camp camp) {
         // 检查群里是否重复创建
-        List<Camp> activities =  campMapper.query(new CampQuery(camp.getGroupId()));
-        if(!CollectionUtils.isEmpty(activities)){
-            return ApiResponse.error("CAMP_REPEATED_CREAT","减脂营已创建");
+        List<Camp> activities = campMapper.query(new CampQuery(camp.getGroupId()));
+        if (!CollectionUtils.isEmpty(activities)) {
+            return ApiResponse.error("CAMP_REPEATED_CREAT", "减脂营已创建");
         }
         if (camp.getId() != null && camp.getId() > 0L) {
             campMapper.updateByPrimaryKey(camp);
@@ -60,28 +66,33 @@ public class CampService {
     }
 
 
-    public ApiResponse isUserJoinCamp(String groupId){
+    public ApiResponse isUserJoinCamp(String groupId) {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         Camp groupCamp = getCampByGid(groupId);
-        if(null == groupCamp){
-            return ApiResponse.error("GROUP_NO_CAMP","本群还未创建减脂营，请管理员创建");
+        if (null == groupCamp) {
+            return ApiResponse.error("GROUP_NO_CAMP", "本群还未创建减脂营，请管理员创建");
         }
         boolean isJoin = membersMapper.selectByWxId(LoginContext.getWxId(), groupCamp.getId()) != null;
-        if(isJoin){
+        if (isJoin) {
             return ApiResponse.ok();
         } else {
-            return ApiResponse.error("USER_NOT_JOIN_CAMP","您还未加入减脂营，请回复\"参加减脂营\"加入");
+            return ApiResponse.error("USER_NOT_JOIN_CAMP", "您还未加入减脂营，请回复\"参加减脂营\"加入");
         }
     }
 
-    public Camp getCampByGid(String groupId){
+    public Camp getCampByGid(String groupId) {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         List<Camp> camps = campMapper.query(new CampQuery(groupId));
-        if(!CollectionUtils.isEmpty(camps)){
+        if (!CollectionUtils.isEmpty(camps)) {
             return camps.get(0);
         }
         return null;
     }
+
+    public Camp getCampById(Long campId) {
+        return campMapper.selectByPrimaryKey(campId);
+    }
+
     /**
      * 报名训练营
      *
@@ -103,6 +114,6 @@ public class CampService {
     }
 
     public static void main(String[] args) {
-        System.out.println(new BigDecimal((double)2.111).setScale(2,BigDecimal.ROUND_HALF_DOWN).toString());
+        System.out.println(new BigDecimal((double) 2.111).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString());
     }
 }

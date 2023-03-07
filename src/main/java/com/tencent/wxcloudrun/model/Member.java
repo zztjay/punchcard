@@ -19,13 +19,9 @@ import java.time.LocalDateTime;
 @NameStyle(Style.normal)
 public class Member implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    public static final Integer ROLE_TYPE_COACH = 3;
-
-    public static final Integer ROLE_TYPE_MANAGER = 2;
-
-    public static final Integer ROLE_TYPE_NORMAL = 1;
-
+    public static final Integer ROLE_TYPE_MANAGER = 3;
+    public static final Integer ROLE_TYPE_NORMAL = 2;
+    public static final Integer ROLE_TYPE_CREATER = 1 ;
     public static final Integer ROLE_TYPE_NO_JOIN = 0;
 
     @Id

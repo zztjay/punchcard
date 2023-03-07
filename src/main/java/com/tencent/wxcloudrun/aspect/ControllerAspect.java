@@ -75,9 +75,9 @@ public class ControllerAspect {
         log.warn("GROUP_NAME:" + request.getHeader(CommonConstants.GROUP_NAME) );
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-        loginInfo.setRoleType(request.getIntHeader(CommonConstants.WX_GROUP_ROLE_TYPE));
         loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
         loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
+
 //        LoginInfo loginInfo = new LoginInfo();
 //        loginInfo.setGroupName("周末减脂小分队");
 //        loginInfo.setWxId("zztjay");
@@ -86,11 +86,15 @@ public class ControllerAspect {
 //        loginInfo.setWxGroupName("韬合（微信群名称）");
 //        loginInfo.setGroupId("周末减脂小分队id");
 
-        // 查询camp信息
+        // 设置减脂营信息
         Camp camp = campService.getCampByGid(loginInfo.getGroupId());
         if(null != camp) {
             loginInfo.setCampId(camp.getId());
+
+            // 设置用户的角色
+            loginInfo.setRoleType(campService.getRoleType(camp.getId(), loginInfo.getWxId()));
         }
+
         LoginContext.createLoginContext(loginInfo);
 
         //  静默用户注册
