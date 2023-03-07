@@ -47,9 +47,9 @@ public class FullProductTest {
 //            System.out.println(commandController.command(command));
 //        }
 
-        for (String command : CommandEnum.punchcard_total.getExample()) {
-            System.out.println(commandController.command(command));
-        }
+//        for (String command : CommandEnum.punchcard_total.getExample()) {
+//            System.out.println(commandController.command(command));
+//        }
 
 
 
