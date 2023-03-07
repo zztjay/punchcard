@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * @Author：zhoutao
@@ -66,6 +67,10 @@ public class ControllerAspect {
 
         // 设置登陆态
         LoginInfo loginInfo = new LoginInfo();
+        Enumeration<String>  enumeration = request.getHeaderNames();
+        while (enumeration.hasMoreElements()){
+            log.warn(enumeration.nextElement());
+        }
         loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
         log.warn("GROUP_NAME:" + request.getHeader(CommonConstants.GROUP_NAME) );
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
