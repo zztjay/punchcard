@@ -35,6 +35,8 @@ public class CampService {
     @Resource
     MembersMapper membersMapper;
 
+    @Deprecated
+    // 以群为主，后续改为以小程序为主
     public int getRoleType(Long campId, String wxId){
        Member member = membersMapper.selectByWxId(wxId,campId);
        if(null != member){
