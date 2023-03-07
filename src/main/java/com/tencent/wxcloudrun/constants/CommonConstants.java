@@ -18,12 +18,12 @@ public class CommonConstants {
 
     public static final String OPENID = "X-WX-OPENID";
 
-    public static final String WX_GROUP_ROLE_TYPE = "WX_GROUP_ROLE_TYPE"; // 用户角色
-    public static final String WX_ID = "USER_WX_ID"; // 用户微信id
-    public static final String USER_WX_NAME = "USER_WX_NAME"; // 用户微信名称
-    public static final String USER_WX_GROUP_NAME = "USER_WX_GROUP_NAME"; // 微信用户群名称
-    public static final String GROUP_ID = "WX_GROUP_ID"; // 微信群id
-    public static final String GROUP_NAME = "WX_GROUP_NAME";  // 微信群名称
+    public static final String WX_GROUP_ROLE_TYPE = "WX_GROUP-ROLE-TYPE"; // 用户角色
+    public static final String WX_ID = "USER-WX-ID"; // 用户微信id
+    public static final String USER_WX_NAME = "USER-WX-NAME"; // 用户微信名称
+    public static final String USER_WX_GROUP_NAME = "USER-WX-GROUP-NAME"; // 微信用户群名称
+    public static final String GROUP_ID = "WX-GROUP-ID"; // 微信群id
+    public static final String GROUP_NAME = "WX-GROUP-NAME";  // 微信群名称
 
     public static final String LANG = "zh_CN";
 
