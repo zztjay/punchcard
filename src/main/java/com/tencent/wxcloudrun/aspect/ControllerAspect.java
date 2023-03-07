@@ -67,12 +67,10 @@ public class ControllerAspect {
         // 设置登陆态
         LoginInfo loginInfo = new LoginInfo();
         loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
+        log.warn("GROUP_NAME:" + request.getHeader(CommonConstants.GROUP_NAME) );
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-
-        String roleType =request.getHeader(CommonConstants.WX_GROUP_ROLE_TYPE);
-        loginInfo.setRoleType(Integer.valueOf(roleType));
-
+        loginInfo.setRoleType(request.getIntHeader(CommonConstants.WX_GROUP_ROLE_TYPE));
         loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
         loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
 //        LoginInfo loginInfo = new LoginInfo();
