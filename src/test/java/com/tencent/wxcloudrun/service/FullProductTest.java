@@ -22,5 +22,13 @@ import javax.annotation.Resource;
 @SpringBootTest
 public class FullProductTest {
 
+    @Resource
+    CommandController commandController;
+
+    @Test
+    public void test() {
+
+        System.out.println(commandController.command("创建减脂营"));
+    }
 
 }

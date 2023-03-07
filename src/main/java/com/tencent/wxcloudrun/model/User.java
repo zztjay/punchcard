@@ -28,6 +28,8 @@ public class User implements Serializable {
     private String memberOpenId; // 用户小程序的openId
     private String memberWxId; // 用户的wxId
     private String memberName; //用户小程序的名称
+    private Integer age; // 年龄
+    private Integer height;// 身高
     private String memberWxNick; // 用户的微信昵称
     private String phoneNumber; //手机号
     private String ext; // 扩展信息

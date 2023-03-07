@@ -27,7 +27,7 @@ public abstract class DefaultPunchCardCmd implements Command{
         String date = RegexUtil.extracCommandDate(commandRequest, type());
 
         // 提取食物信息 todo
-        String content = null;
+        String content = commandRequest;
 
         return punchCardService.punchcard(content, date, loginInfo.getCampId(),
                 loginInfo.getWxId(), Record.PUNCHCARD_TYPE_FOOD);

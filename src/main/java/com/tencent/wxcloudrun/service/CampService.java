@@ -37,6 +37,14 @@ public class CampService {
     @Resource
     MembersMapper membersMapper;
 
+    public int getRoleType(Long campId, String wxId){
+       Member member = membersMapper.selectByWxId(wxId,campId);
+       if(null != member){
+           return member.getRoleType();
+       }
+       return Member.ROLE_TYPE_NO_JOIN;
+    }
+
     public ApiResponse save(Camp camp) {
         // 检查群里是否重复创建
         List<Camp> activities =  campMapper.query(new CampQuery(camp.getGroupId()));
@@ -62,7 +70,7 @@ public class CampService {
         if(isJoin){
             return ApiResponse.ok();
         } else {
-            return ApiResponse.error("USER_NOT_JOIN_CAMP","用户未加入减脂营");
+            return ApiResponse.error("USER_NOT_JOIN_CAMP","您还未加入减脂营，请回复\"参加减脂营\"加入");
         }
     }
 

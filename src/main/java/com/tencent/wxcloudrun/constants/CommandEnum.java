@@ -17,28 +17,36 @@ import java.util.List;
 public enum CommandEnum {
     sports_punchcard("运动打卡", "^运动打卡[:：]" + "\\s?" + "((0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)[,，]?){0,1}"
             + "([\\u4E00-\\u9FA5A-Za-z0-9]+[,，]?)+", Arrays.asList("运动打卡：跳绳3小时，骑行1小时", "运动打卡：0301，跳绳3小时，骑行1小时"),
-            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     weight_punchcard("体重打卡", "^体重打卡[:：]" + "\\s?" + "((0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)[,，]?){0,1}"
             + "(\\d{1,4})" + "(公斤|斤)$", Arrays.asList("体重打卡：64公斤", "体重打卡：0301，64公斤", "体重打卡：121斤", "体重打卡：0301，121斤"),
-            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     food_punchcard("食物打卡", "^食物打卡[:：]" + "\\s?" + "((0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)){0,1}"
             + "([\\u4E00-\\u9FA5A-Za-z0-9]+[,，]?)+", Arrays.asList("食物打卡：牛奶1ml，鸡蛋1个", "食物打卡：0301，牛奶1ml，鸡蛋1个"),
-            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     delete_punchcard("删除打卡", "^删除" + "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)"
             + "的打卡$", Arrays.asList("删除0302的打卡"), "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)",
-            Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     punchcard_total("我的打卡统计", "\\s?" + "我" + "(近一周|近一月|近1周|近1月|今天)" + "的"
             + "打卡统计", Arrays.asList("我今天的打卡统计", "我近一周的打卡统计", "我近一月的打卡统计"),
-            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     weight_punchcard_record("查看我的体重记录", "\\s?" + "我" + "(近一周|近一月|近1周|近1月|今天)" + "的"
             + "体重记录", Arrays.asList("我近一周的体重记录", "我近一周的体重记录", "我近一月的体重记录"),
-            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     food_punchcard_record("查看我的运动记录", "\\s?" + "我" + "(近一周|近一月|近1周|近1月|今天)" + "的"
             + "运动记录", Arrays.asList("我近一周的运动记录", "我近一周的运动记录", "我近一月的运动记录"),
-            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.MEMBER_TYPE_NORMAL)),
+            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
     sports_punchcard_record("查看我的饮食记录", "\\s?" + "我" + "(近一周|近一月|近1周|近1月|今天)" + "的"
             + "饮食记录", Arrays.asList("我近一周的饮食记录", "我近一周的饮食记录", "我近一月的饮食记录"),
-            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.MEMBER_TYPE_NORMAL));
+            "(近一周|近一月|近1周|近1月|今天)",Arrays.asList(Member.ROLE_TYPE_NORMAL)),
+
+
+    /******************团队相关命令************************/
+    create_camp("创建减脂营", "创建减脂营",Arrays.asList("创建减脂营") ,
+            "",Arrays.asList(Member.ROLE_TYPE_NO_JOIN)),
+
+    join_camp("参加减脂营", "参加减脂营",Arrays.asList("参加减脂营") ,
+            "",Arrays.asList(Member.ROLE_TYPE_NO_JOIN));
     private String command;
     private String reg;
     private List<String> example;
