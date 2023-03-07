@@ -36,8 +36,8 @@ public class CommandController {
      *
      * @return API response json
      */
-    @PostMapping(value = "/api/robot/command")
-    public ApiResponse command(@RequestBody String commandRequest) {
+    @GetMapping(value = "/api/robot/command")
+    public ApiResponse command(@RequestParam String commandRequest) {
 
         // 解析请求命令
         ApiResponse commandResult = CommandEnum.getCommand(commandRequest);
