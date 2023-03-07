@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface PunchCardMapper extends Mapper<Record> {
     List<Record> query(PunchCardQuery query);
-
     int count(PunchCardQuery query);
 
 

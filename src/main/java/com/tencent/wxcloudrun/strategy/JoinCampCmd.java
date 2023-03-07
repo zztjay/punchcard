@@ -20,7 +20,7 @@ public class JoinCampCmd implements Command{
     CampService campService;
     
     @Override
-    public ApiResponse excute(String commandRequest, LoginInfo loginInfo) {
+    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
         return campService.joinCamp(loginInfo.getGroupId());
     }
 

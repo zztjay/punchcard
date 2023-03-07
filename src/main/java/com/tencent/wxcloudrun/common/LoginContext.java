@@ -32,6 +32,11 @@ public class LoginContext {
         return holder.get().getWxId();
     }
 
+    public static int getRoleType(){
+        return holder.get().getRoleType();
+    }
+
+
     public static Long getCampId(){
         return holder.get().getCampId();
     }

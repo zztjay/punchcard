@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.common.LoginContext;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CommandEnum;
 
+import com.tencent.wxcloudrun.model.Camp;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.strategy.Command;
@@ -39,27 +40,34 @@ public class CommandController {
     public ApiResponse command(@RequestBody String commandRequest) {
 
         // 解析请求命令
-        ApiResponse apiResponse = CommandEnum.getCommand(commandRequest);
-        if (apiResponse.isSuccess()) {
+        ApiResponse commandResult = CommandEnum.getCommand(commandRequest);
+        if (commandResult.isSuccess()) {
 
             // 获取命令模型
-            CommandEnum commandType = (CommandEnum) apiResponse.getData();
+            CommandEnum commandType = (CommandEnum) commandResult.getData();
 
             // 检查命令权限
             Integer roleType = campService.getRoleType(LoginContext.getCampId(),LoginContext.getWxId());
             List<Integer> authTypes = commandType.getAuthUserTypes();
-            if(roleType == Member.ROLE_TYPE_NO_JOIN && !authTypes.contains(roleType) ){
+            if(!authTypes.contains(roleType) ){
                   return ApiResponse.error("NO_PERMISSION_EXCUTE","您没有权限执行命令！");
+            }
+
+            // 减脂营检查
+            if(commandType == CommandEnum.create_camp && LoginContext.getCampId()==null){
+                return ApiResponse.error("GROUP_NO_CAMP","本群还未创建减脂营，请管理员创建");
             }
 
             // 路由对应的命令解析器
             Command command = commandFatory.getCommandModel(commandType);
 
             // 执行命令
-            return command.excute(commandRequest, LoginContext.getLoginInfo());
+            ApiResponse result =  command.execute(commandRequest, LoginContext.getLoginInfo());
+
+            return result;
 
         } else {
-            return apiResponse;
+            return commandResult;
         }
     }
 }

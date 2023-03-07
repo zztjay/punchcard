@@ -4,6 +4,8 @@ import com.tencent.wxcloudrun.common.LoginContext;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CommonConstants;
 import com.tencent.wxcloudrun.dto.LoginInfo;
+import com.tencent.wxcloudrun.model.Camp;
+import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.model.User;
 import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.service.UserService;
@@ -62,18 +64,25 @@ public class ControllerAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 设置登陆态
-//        LoginInfo loginInfo = new LoginInfo();
-//        loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
-//        loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
-//        loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-//        loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
-//        loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setGroupName("周末减脂小分队");
-        loginInfo.setWxId("zztjay");
-        loginInfo.setWxName("韬（微信名称）");
-        loginInfo.setWxGroupName("韬合（微信群名称）");
-        loginInfo.setGroupId("周末减脂小分队id");
+        loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
+        loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
+        loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
+        loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
+        loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
+//        LoginInfo loginInfo = new LoginInfo();
+//        loginInfo.setGroupName("周末减脂小分队");
+//        loginInfo.setWxId("zztjay");
+//        loginInfo.setWxName("韬（微信名称）");
+//        loginInfo.setRoleType(Member.ROLE_TYPE_MANAGER);
+//        loginInfo.setWxGroupName("韬合（微信群名称）");
+//        loginInfo.setGroupId("周末减脂小分队id");
+
+        // 查询camp信息
+        Camp camp = campService.getCampByGid(loginInfo.getGroupId());
+        if(null != camp) {
+            loginInfo.setCampId(camp.getId());
+        }
         LoginContext.createLoginContext(loginInfo);
 
         //  静默用户注册
@@ -97,7 +106,7 @@ public class ControllerAspect {
 
         // 打印请求信息
         StringBuilder logInfo = new StringBuilder("-----Aspect 开始-----").append("\n");
-        logInfo.append("openUid:").append(LoginContext.getOpenId()).append("\n");
+        logInfo.append("wxId:").append(LoginContext.getWxId()).append("\n");
         logInfo.append("请求地址：").append(request.getRequestURL().toString()).append(",").append(request.getMethod()).append("\n");
         logInfo.append("类名方法：").append(signature.getDeclaringTypeName()).append(",").append(name).append("\n");
         try {

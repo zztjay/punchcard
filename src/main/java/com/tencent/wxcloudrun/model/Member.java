@@ -23,9 +23,11 @@ public class Member implements Serializable {
     public static final Integer ROLE_TYPE_COACH = 3;
 
     public static final Integer ROLE_TYPE_MANAGER = 2;
+
     public static final Integer ROLE_TYPE_NORMAL = 1;
 
     public static final Integer ROLE_TYPE_NO_JOIN = 0;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 唯一id
@@ -35,5 +37,5 @@ public class Member implements Serializable {
     private String memberWxId; // 用户的wxId，机器人以wxId为准
     private String memberOpenId; // 用户的openId，机器人以openId为准
     private String memberName; // 用户减脂营的名称（在群里，以群名称为主）
-    private int roleType; // 用户角色,1: 成员，2:管理员
+    private Integer roleType; // 用户角色,1: 成员，2:管理员
 }

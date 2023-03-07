@@ -20,7 +20,7 @@ public class CreateCampCmd implements Command{
     CampService campService;
 
     @Override
-    public ApiResponse excute(String commandRequest, LoginInfo loginInfo) {
+    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
         Camp camp = new Camp();
         camp.setCampName(loginInfo.getGroupName());
         camp.setGroupId(loginInfo.getGroupId());
@@ -33,4 +33,5 @@ public class CreateCampCmd implements Command{
     public CommandEnum type() {
         return CommandEnum.create_camp;
     }
+
 }

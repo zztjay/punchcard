@@ -18,4 +18,6 @@ public class PunchCardQuery extends QueryBase {
     private String openId; // 用户的openId
     private String wxId; // 用户的wxId
     private Integer type; // 打卡类型
+    private String startTime; // 开始打卡时间
+    private String endTime; // 结束打卡时间
 }

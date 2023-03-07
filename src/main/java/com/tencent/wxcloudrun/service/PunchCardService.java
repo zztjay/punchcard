@@ -33,61 +33,44 @@ public class PunchCardService {
     @Resource
     PunchCardMapper punchCardMapper;
 
-    @Resource
-    UserService userService;
-
-    @Resource
-    CampMapper activityMapper;
-
-    @Resource
-    MembersMapper membersMapper;
-
-    public ApiResponse delete(Long campId, String punchCardDate, String wxId, int type) {
+    private void delete(Long campId, String punchCardDate, String wxId, int type) {
         Record record = getRecord(campId, wxId, punchCardDate, type);
         if (null != record) {
             punchCardMapper.deleteByPrimaryKey(record.getId());
         }
-        return ApiResponse.ok();
     }
 
     /**
      * 删除用户的所有打卡记录
+     *
      * @param campId
      * @param punchCardDate
      * @param wxId
      * @return
      */
-    public ApiResponse delete(Long campId, String punchCardDate, String wxId) {
+    public void delete(Long campId, String punchCardDate, String wxId) {
 
         // 删除食物打卡
-        Record foodRecord = getRecord(campId, wxId, punchCardDate,  Record.PUNCHCARD_TYPE_FOOD);
-        if (null != foodRecord) {
-            punchCardMapper.deleteByPrimaryKey(foodRecord.getId());
-        }
+        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_FOOD);
 
         // 删除运动打卡
-        Record sportsRecord = getRecord(campId,wxId, punchCardDate, Record.PUNCHCARD_TYPE_FOOD);
-        if (null != sportsRecord) {
-            punchCardMapper.deleteByPrimaryKey(sportsRecord.getId());
-        }
+        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_SPORTS);
 
         // 删除体重打卡
-        Record weigthRecord = getRecord(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_FOOD);
-        if (null != weigthRecord) {
-            punchCardMapper.deleteByPrimaryKey(weigthRecord.getId());
-        }
+        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_WEIGHT);
 
-        return ApiResponse.ok();
     }
+
+
 
     /**
      * 打卡服务
      *
      * @return API response json
      */
-    public ApiResponse punchcard( String content, String punchCardTime, Long campId, String wxId, int type) {
-        Record record = getRecord(campId,wxId,punchCardTime,type);
-        if(null == record){
+    public ApiResponse punchcard(String content, String punchCardTime, Long campId, String wxId, int type) {
+        Record record = getRecord(campId, wxId, punchCardTime, type);
+        if (null == record) {
             record = new Record();
             record.setContent(content);
             record.setType(type);
@@ -97,12 +80,11 @@ public class PunchCardService {
             punchCardMapper.insert(record);
         } else {
             record.setContent(content);
-            record.setType(type);
-            punchCardMapper.updateByPrimaryKey(record);
+            record.setUpdatedAt(LocalDateTime.now());
+            punchCardMapper.updateByPrimaryKeySelective(record);
         }
         return ApiResponse.ok(record.getId());
     }
-
 
 
     /**
@@ -114,10 +96,10 @@ public class PunchCardService {
      * @return
      */
     public Record getRecord(Long campId, String wxId, String punchCardTime, int type) {
-        List<Record> records = getRecords(campId,wxId,punchCardTime);
+        List<Record> records = getRecords(campId, wxId, punchCardTime);
         if (!CollectionUtils.isEmpty(records)) {
             for (Record record : records) {
-                if(record.getType() == type){
+                if (record.getType() == type) {
                     return record;
                 }
             }
@@ -134,25 +116,20 @@ public class PunchCardService {
         return punchCardMapper.query(query);
     }
 
-//    /**
-//     * 查询训练营打卡
-//     *
-//     * @return API response json
-//     */
-//    public Page<PunchCardDTO> query(PunchCardQuery query) {
-//        Page<PunchCardDTO> page = new Page<>();
-//        int count = punchCardMapper.count(query);
-//        if (count > 0) {
-//            List<PunchCardDTO> punchCardDTOS = new ArrayList<>();
-//            List<Record> records = punchCardMapper.query(query);
-//            for (Record record : records) {
-//                punchCardDTOS.add(getPunchCardRecord(record.getId()));
-//            }
-//            page.setEntityList(punchCardDTOS);
-//        }
-//        page.setTotalRecords(count);
-//        return page;
-//    }
+    /**
+     * 查询训练营打卡
+     *
+     * @return API response json
+     */
+    public int count(String wxId, Long campId, String startTime, String endTime, Integer type) {
+       PunchCardQuery query = new PunchCardQuery();
+       query.setType(type);
+       query.setStartTime(startTime);
+       query.setEndTime(endTime);
+       query.setCampId(campId);
+       query.setWxId(wxId);
+       return punchCardMapper.count(query);
+    }
 //
 //    public
 //

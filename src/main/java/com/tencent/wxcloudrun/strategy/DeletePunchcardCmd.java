@@ -22,10 +22,14 @@ public class DeletePunchcardCmd implements Command {
     PunchCardService punchCardService;
 
     @Override
-    public ApiResponse excute(String commandRequest, LoginInfo loginInfo) {
+    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
 
-        // 提取日期
-        String date = RegexUtil.extracCommandDate(commandRequest,type());
+        // 提取日期信息
+        ApiResponse result = RegexUtil.extractDate(commandRequest, type());
+        if(!result.isSuccess()){
+            return result;
+        }
+        String date = (String)result.getData();
 
         // 删除打卡
         punchCardService.delete(loginInfo.getCampId(), date, loginInfo.getWxId());

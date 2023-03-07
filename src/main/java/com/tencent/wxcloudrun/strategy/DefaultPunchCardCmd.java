@@ -22,17 +22,24 @@ public abstract class DefaultPunchCardCmd implements Command{
     PunchCardService punchCardService;
 
     @Override
-    public ApiResponse excute(String commandRequest, LoginInfo loginInfo) {
+    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
+
         // 提取日期信息
-        String date = RegexUtil.extracCommandDate(commandRequest, type());
+        ApiResponse result = RegexUtil.extractDate(commandRequest, type());
+        if(!result.isSuccess()){
+            return result;
+        }
+        String date = (String)result.getData();
 
         // 提取食物信息 todo
         String content = commandRequest;
 
         return punchCardService.punchcard(content, date, loginInfo.getCampId(),
-                loginInfo.getWxId(), Record.PUNCHCARD_TYPE_FOOD);
+                loginInfo.getWxId(), punchCardType());
     }
 
     @Override
     public abstract CommandEnum type() ;
+
+    public abstract Integer punchCardType();
 }

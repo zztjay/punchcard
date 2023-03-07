@@ -17,10 +17,15 @@ import javax.annotation.Resource;
  * @Date：2023/3/6 19:32
  */
 @Component
-public class SportsPunchcardCmd extends DeletePunchcardCmd {
+public class SportsPunchcardCmd extends DefaultPunchCardCmd {
 
     @Override
     public CommandEnum type() {
         return CommandEnum.sports_punchcard;
+    }
+
+    @Override
+    public Integer punchCardType() {
+        return Record.PUNCHCARD_TYPE_SPORTS;
     }
 }

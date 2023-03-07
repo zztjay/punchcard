@@ -12,13 +12,14 @@ import com.tencent.wxcloudrun.dto.LoginInfo;
  */
 public interface Command {
 
+
     /**
      * 执行命令
      * @param commandRequest
      * @param loginInfo
      * @return
      */
-    public ApiResponse excute(String commandRequest,  LoginInfo loginInfo);
+    public ApiResponse execute(String commandRequest,  LoginInfo loginInfo);
 
 
     /**
