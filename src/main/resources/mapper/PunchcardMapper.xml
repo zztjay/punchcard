@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.PunchCardMapper">
+
+
+
+    <select
+            id="query"
+            parameterType="com.tencent.wxcloudrun.common.QueryBase"
+            resultType="com.tencent.wxcloudrun.model.Record">
+        SELECT
+        *
+        FROM Records
+        WHERE 1 = 1
+        <if test="campId != null ">
+            and campId = #{campId}
+        </if>
+        <if test="openId != null ">
+            and memberOpenId = #{openId}
+        </if>
+        <if test="wxId != null ">
+            and memberWxId = #{wxId}
+        </if>
+        <if test="type != null ">
+            and type = #{type}
+        </if>
+        <if test="punchCardTime != null ">
+            and punchCardTime = #{punchCardTime}
+        </if>
+
+        order by createdAt desc
+        <if test="startRow != null and pageSize != null">
+            LIMIT #{startRow}, #{pageSize}
+        </if>
+
+    </select>
+
+    <select
+            id="count"
+            parameterType="com.tencent.wxcloudrun.common.QueryBase"
+            resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM Records
+        WHERE 1 = 1
+
+        <if test="campId != null ">
+            and campId = #{campId}
+        </if>
+        <if test="type != null ">
+            and type = #{type}
+        </if>
+        <if test="openId != null ">
+            and memberOpenId = #{openId}
+        </if>
+        <if test="wxId != null ">
+            and memberWxId = #{wxId}
+        </if>
+        <if test="punchCardTime != null ">
+            and punchCardTime = #{punchCardTime}
+        </if>
+
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.UsersMapper">
+
+    <select id="getByOpenId" resultType="com.tencent.wxcloudrun.model.User" parameterType="java.lang.String">
+        SELECT *
+        FROM Users
+        WHERE memberOpenId = #{openId}
+        limit 1
+    </select>
+
+    <select id="getByWxId" resultType="com.tencent.wxcloudrun.model.User" parameterType="java.lang.String">
+        SELECT *
+        FROM Users
+        WHERE memberWxId = #{wxId}
+            limit 1
+    </select>
+
+
+</mapper>

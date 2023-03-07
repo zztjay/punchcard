@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.MembersMapper">
+
+    <select id="selectByUserName" resultType="com.tencent.wxcloudrun.model.Member" >
+        SELECT *
+        FROM Members
+        WHERE memberName = #{userName} and campId = #{campId} limit 1
+    </select>
+
+    <select id="selectByOpenId" resultType="com.tencent.wxcloudrun.model.Member" >
+        SELECT *
+        FROM Members
+        WHERE memberOpenId = #{openId} and campId = #{campId} limit 1
+    </select>
+
+    <select id="selectByWxId" resultType="com.tencent.wxcloudrun.model.Member" >
+        SELECT *
+        FROM Members
+        WHERE memberWxId = #{wxId} and campId = #{campId} limit 1
+    </select>
+    
+    <select id="selectByActivityId" resultType="com.tencent.wxcloudrun.model.Member" >
+        SELECT *
+        FROM Members
+        WHERE campId = #{campId}
+    </select>
+
+    <select id="getSignList" resultType="java.lang.Long" >
+        SELECT campId
+        FROM Members
+        WHERE memberOpenId = #{openId}
+        order by createdAt desc
+    </select>
+
+    <select id="sumMembers" resultType="java.lang.Integer" >
+        SELECT COALESCE(count(*),0)
+        FROM Members
+        WHERE  campId = #{campId}
+    </select>
+
+
+</mapper>
