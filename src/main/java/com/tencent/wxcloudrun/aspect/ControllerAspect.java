@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.aspect;
 
+import com.github.jsonzou.jmockdata.util.StringUtils;
 import com.tencent.wxcloudrun.common.LoginContext;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CommonConstants;
@@ -68,6 +69,10 @@ public class ControllerAspect {
         loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
+
+        String roleType =request.getHeader(CommonConstants.WX_GROUP_ROLE_TYPE);
+        loginInfo.setRoleType(Integer.valueOf(roleType));
+
         loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
         loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
 //        LoginInfo loginInfo = new LoginInfo();

@@ -18,6 +18,7 @@ public class CommonConstants {
 
     public static final String OPENID = "X-WX-OPENID";
 
+    public static final String WX_GROUP_ROLE_TYPE = "WX_GROUP_ROLE_TYPE"; // 用户角色
     public static final String WX_ID = "USER_WX_ID"; // 用户微信id
     public static final String USER_WX_NAME = "USER_WX_NAME"; // 用户微信名称
     public static final String USER_WX_GROUP_NAME = "USER_WX_GROUP_NAME"; // 微信用户群名称
