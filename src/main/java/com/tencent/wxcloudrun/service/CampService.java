@@ -98,16 +98,22 @@ public class CampService {
      *
      * @return API response json
      */
-    public ApiResponse joinCamp(String groupId) {
+    public ApiResponse joinCamp(Long campId, String memberName, String wxId) {
 
-        Camp camp = getCampByGid(groupId);
+        Camp camp = getCampById(campId);
 
         // 生成报名信息
         Member member = new Member();
         member.setCampId(camp.getId());
-        member.setMemberName(LoginContext.getWxGroupName());
-        member.setMemberWxId(LoginContext.getWxId());
-        member.setRoleType(LoginContext.getRoleType());
+        member.setMemberName(memberName);
+        member.setMemberWxId(wxId);
+        // 是否为创建者角色
+        if(null != camp && camp.getCreaterWxId().equals(wxId)){
+            member.setRoleType(Member.ROLE_TYPE_CREATER);
+        } else {
+            member.setRoleType(Member.ROLE_TYPE_NORMAL);
+        }
+
         membersMapper.insert(member);
 
         return ApiResponse.ok(member.getId());
