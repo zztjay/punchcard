@@ -6,17 +6,17 @@ import lombok.Data;
 import java.util.HashMap;
 
 @Data
-public final class ApiResponse {
+public final class ApiResponse<T> {
 
   private String code;
   private String errorMsg;
-  private Object data;
+  private T data;
 
   public boolean isSuccess(){
     return code.equals(CommonConstants.SUCCESS);
   }
 
-  private ApiResponse(String code, String errorMsg, Object data) {
+  private ApiResponse(String code, String errorMsg, T data) {
     this.code = code;
     this.errorMsg = errorMsg;
     this.data = data;

@@ -16,13 +16,13 @@ import javax.annotation.Resource;
  * @Date：2023/3/7 11:16
  */
 @Component
-public abstract class DefaultPunchCardCmd implements Command{
+public abstract class DefaultPunchCardCmd extends AbstractCommand<String,Long>{
 
     @Resource
     PunchCardService punchCardService;
 
     @Override
-    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
+    public ApiResponse<Long> doExecute(String commandRequest, LoginInfo loginInfo) {
 
         // 提取日期信息
         ApiResponse result = RegexUtil.extractDate(commandRequest, type());
@@ -36,6 +36,11 @@ public abstract class DefaultPunchCardCmd implements Command{
 
         return punchCardService.punchcard(content, date, loginInfo.getCampId(),
                 loginInfo.getWxId(), punchCardType());
+    }
+
+    @Override
+    public String format(Long data) {
+        return generalResult();
     }
 
     @Override

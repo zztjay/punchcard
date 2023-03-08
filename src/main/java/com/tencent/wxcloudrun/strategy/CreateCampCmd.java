@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.strategy;
 
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CommandEnum;
 import com.tencent.wxcloudrun.dto.LoginInfo;
@@ -15,12 +16,17 @@ import javax.annotation.Resource;
  * @Date：2023/3/7 12:19
  */
 @Component
-public class CreateCampCmd implements Command{
+public class CreateCampCmd extends AbstractCommand<String,Long>{
     @Resource
     CampService campService;
 
     @Override
-    public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
+    public String format(Long data) {
+        return generalResult();
+    }
+
+    @Override
+    public ApiResponse<Long> doExecute(java.lang.String commandRequest, LoginInfo loginInfo) {
         Camp camp = new Camp();
         camp.setCampName(loginInfo.getGroupName());
         camp.setGroupId(loginInfo.getGroupId());
@@ -28,6 +34,7 @@ public class CreateCampCmd implements Command{
         camp.setCreaterName(loginInfo.getWxGroupName());
         return campService.save(camp);
     }
+
 
     @Override
     public CommandEnum type() {

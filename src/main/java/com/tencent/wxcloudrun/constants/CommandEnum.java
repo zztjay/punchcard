@@ -49,6 +49,9 @@ public enum CommandEnum {
     create_camp("创建减脂营", "创建减脂营",Arrays.asList("创建减脂营") ,
             "",Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL,Member.ROLE_TYPE_CREATER)),
 
+    close_camp("关闭减脂营", "关闭减脂营",Arrays.asList("关闭减脂营") ,
+            "",Arrays.asList(Member.ROLE_TYPE_CREATER)),
+
     join_camp("参加减脂营", "参加减脂营",Arrays.asList("参加减脂营") ,
             "",Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL,Member.ROLE_TYPE_CREATER));
     private String command;

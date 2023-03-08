@@ -10,7 +10,7 @@ import com.tencent.wxcloudrun.dto.LoginInfo;
  * @Author：zhoutao
  * @Date：2023/3/6 19:32
  */
-public interface Command {
+public interface Command<T> {
 
 
     /**
@@ -19,7 +19,7 @@ public interface Command {
      * @param loginInfo
      * @return
      */
-    public ApiResponse execute(String commandRequest,  LoginInfo loginInfo);
+    public ApiResponse<T> execute(String commandRequest,  LoginInfo loginInfo);
 
 
     /**
