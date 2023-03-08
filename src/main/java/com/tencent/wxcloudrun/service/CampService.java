@@ -38,6 +38,7 @@ public class CampService {
 
     // 以群为主，后续改为以小程序为主
     public int getRoleType(Long campId, String wxId) {
+
         // 是否为创建者角色
         Camp camp = getCampById(campId);
         if(null != camp && camp.getCreaterWxId().equals(wxId)){

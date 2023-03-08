@@ -21,7 +21,7 @@ public class JoinCampCmd implements Command{
     
     @Override
     public ApiResponse execute(String commandRequest, LoginInfo loginInfo) {
-        return campService.joinCamp(loginInfo.getGroupId());
+        return campService.joinCamp(loginInfo.getCampId(),loginInfo.getWxGroupName(),loginInfo.getWxId());
     }
 
     @Override

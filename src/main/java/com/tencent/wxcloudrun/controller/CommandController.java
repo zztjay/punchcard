@@ -47,7 +47,7 @@ public class CommandController {
             CommandEnum commandType = (CommandEnum) commandResult.getData();
 
             // 检查命令权限
-            Integer roleType = LoginContext.getRoleType();
+            Integer roleType = campService.getRoleType(LoginContext.getCampId(),LoginContext.getWxId());
             List<Integer> authTypes = commandType.getAuthUserTypes();
             if(!authTypes.contains(roleType) ){
                   return ApiResponse.error("NO_PERMISSION_EXCUTE","您没有权限执行"+

@@ -86,12 +86,15 @@ public class ControllerAspect {
         // 设置减脂营信息
         Camp camp = campService.getCampByGid(loginInfo.getGroupId());
         if(null != camp) {
-
             loginInfo.setCampId(camp.getId());
 
-            // 设置用户的角色
-            loginInfo.setRoleType(campService.getRoleType(camp.getId(), loginInfo.getWxId()));
+            //  静默用户加入减脂营
+            ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId());
+            if(apiResponse.getCode().equals("USER_NOT_JOIN_CAMP") ){
+                campService.joinCamp(loginInfo.getCampId(),LoginContext.getWxName(),LoginContext.getWxId());
+            }
         }
+
         LoginContext.createLoginContext(loginInfo);
 
         //  静默用户注册
@@ -101,14 +104,6 @@ public class ControllerAspect {
             user.setMemberWxNick(loginInfo.getWxName());
             user.setMemberWxId(loginInfo.getWxId());
             userService.save(user);
-        }
-
-        //  静默用户加入减脂营
-        if(loginInfo.getCampId() != null) {
-            ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId());
-            if(apiResponse.getCode().equals("USER_NOT_JOIN_CAMP") ){
-                campService.joinCamp(loginInfo.getCampId(),LoginContext.getWxName(),LoginContext.getWxId());
-            }
         }
 
         // 获取方法签名

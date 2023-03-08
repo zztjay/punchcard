@@ -84,6 +84,11 @@ public enum CommandEnum {
     }
 
 
+    public static void main(String[] args) {
+        String mentionText = "@亚慧慧 创建减脂营";
+        String command = mentionText.replaceFirst("@亚慧慧[,，\\s]+" ,"查");
+        System.out.println(command);
+    }
 
     public String getCommand() {
         return command;

@@ -11,8 +11,6 @@ import lombok.Data;
 public class LoginInfo {
     private String openId;  // 微信openId
 
-    private int roleType = Member.ROLE_TYPE_NO_JOIN; // 群用户类型
-
     private String wxId;  // 微信Id
 
     private String wxGroupName; // 用户群昵称
