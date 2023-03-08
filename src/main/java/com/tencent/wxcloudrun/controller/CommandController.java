@@ -46,17 +46,17 @@ public class CommandController {
             // 获取命令模型
             CommandEnum commandType = (CommandEnum) commandResult.getData();
 
+            // 减脂营检查
+            if(commandType != CommandEnum.create_camp && LoginContext.getCampId() == null){
+                return ApiResponse.error("GROUP_NO_CAMP","本群还未创建减脂营，请管理员创建");
+            }
+
             // 检查命令权限
             Integer roleType = campService.getRoleType(LoginContext.getCampId(),LoginContext.getWxId());
             List<Integer> authTypes = commandType.getAuthUserTypes();
             if(!authTypes.contains(roleType) ){
                   return ApiResponse.error("NO_PERMISSION_EXCUTE","您没有权限执行"+
                           commandType.getCommand() +  "命令！");
-            }
-
-            // 减脂营检查
-            if(commandType != CommandEnum.create_camp && LoginContext.getCampId()==null){
-                return ApiResponse.error("GROUP_NO_CAMP","本群还未创建减脂营，请管理员创建");
             }
 
             // 路由对应的命令解析器
