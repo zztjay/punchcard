@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.aspect;
 
+import com.alibaba.fastjson.JSON;
 import com.github.jsonzou.jmockdata.util.StringUtils;
 import com.tencent.wxcloudrun.common.LoginContext;
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -67,12 +68,7 @@ public class ControllerAspect {
 
         // 设置登陆态
         LoginInfo loginInfo = new LoginInfo();
-        Enumeration<String>  enumeration = request.getHeaderNames();
-        while (enumeration.hasMoreElements()){
-            log.warn(enumeration.nextElement());
-        }
         loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
-        log.warn("GROUP_NAME:" + request.getHeader(CommonConstants.GROUP_NAME) );
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
         loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
@@ -94,7 +90,6 @@ public class ControllerAspect {
             // 设置用户的角色
             loginInfo.setRoleType(campService.getRoleType(camp.getId(), loginInfo.getWxId()));
         }
-
         LoginContext.createLoginContext(loginInfo);
 
         //  静默用户注册
@@ -115,12 +110,13 @@ public class ControllerAspect {
         // 获取方法签名
         Signature signature = proceedingJoinPoint.getSignature();
         String name = signature.getName();
+        Object[] objects = proceedingJoinPoint.getArgs();
 
         // 打印请求信息
         StringBuilder logInfo = new StringBuilder("-----Aspect 开始-----").append("\n");
-        logInfo.append("wxId:").append(LoginContext.getWxId()).append("\n");
-        logInfo.append("请求地址：").append(request.getRequestURL().toString()).append(",").append(request.getMethod()).append("\n");
+        log.warn("登陆信息:" + loginInfo );
         logInfo.append("类名方法：").append(signature.getDeclaringTypeName()).append(",").append(name).append("\n");
+        logInfo.append("请求参数：").append(JSON.toJSONString(objects)).append("\n");
         try {
             // 获取返回结果
             Object result = proceedingJoinPoint.proceed();
