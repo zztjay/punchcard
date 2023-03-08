@@ -58,7 +58,9 @@ public class PunchcardTotalCmd implements Command {
         int foodCount = punchCardService.count(loginInfo.getWxId(),loginInfo.getCampId()
                 ,startTime,endTime,Record.PUNCHCARD_TYPE_FOOD); // 食物打卡
 
-        String result = format(dateCh,startTime,endTime,weightCount,sportsCount,foodCount);
+        String result = format(dateCh,DateUtil.getDate2Str("MM.dd",DateUtil.getStr2SDate(startTime))
+                , DateUtil.getDate2Str("MM.dd",DateUtil.getStr2SDate(endTime))
+                ,weightCount,sportsCount,foodCount);
 
         return ApiResponse.ok(result);
     }
