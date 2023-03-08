@@ -28,6 +28,14 @@
             and punchCardTime = #{punchCardTime}
         </if>
 
+        <if test="startTime != null ">
+            and punchCardTime > #{startTime}
+        </if>
+
+        <if test="endTime != null ">
+            and punchCardTime <![CDATA[ <= ]]>  #{endTime}
+        </if>
+
         order by createdAt desc
         <if test="startRow != null and pageSize != null">
             LIMIT #{startRow}, #{pageSize}
@@ -57,6 +65,14 @@
         </if>
         <if test="punchCardTime != null ">
             and punchCardTime = #{punchCardTime}
+        </if>
+
+        <if test="startTime != null ">
+            and punchCardTime > #{startTime}
+        </if>
+
+        <if test="endTime != null ">
+            and punchCardTime  <![CDATA[ <= ]]>  #{endTime}
         </if>
 
     </select>
