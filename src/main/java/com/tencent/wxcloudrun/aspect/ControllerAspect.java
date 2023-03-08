@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 
 import javax.annotation.Resource;
@@ -68,11 +69,11 @@ public class ControllerAspect {
 
         // 设置登陆态
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setGroupName(request.getHeader(CommonConstants.GROUP_NAME));
+        loginInfo.setGroupName(UriEncoder.decode(request.getHeader(CommonConstants.GROUP_NAME)));
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-        loginInfo.setWxName(request.getHeader(CommonConstants.USER_WX_NAME));
-        loginInfo.setWxGroupName(request.getHeader(CommonConstants.USER_WX_GROUP_NAME));
+        loginInfo.setWxName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_NAME)));
+        loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
 
 //        LoginInfo loginInfo = new LoginInfo();
 //        loginInfo.setGroupName("周末减脂小分队");
