@@ -67,13 +67,13 @@ public class CampService {
     }
 
 
-    public ApiResponse isUserJoinCamp(String groupId) {
+    public ApiResponse isUserJoinCamp(String groupId, String wxId) {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         Camp groupCamp = getCampByGid(groupId);
         if (null == groupCamp) {
             return ApiResponse.error("GROUP_NO_CAMP", "本群还未创建减脂营，请管理员创建");
         }
-        boolean isJoin = membersMapper.selectByWxId(LoginContext.getWxId(), groupCamp.getId()) != null;
+        boolean isJoin = membersMapper.selectByWxId(wxId, groupCamp.getId()) != null;
         if (isJoin) {
             return ApiResponse.ok();
         } else {
