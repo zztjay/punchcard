@@ -27,4 +27,6 @@ public class CommonConstants {
 
     public static final String LANG = "zh_CN";
 
+    public static final double MINIMAL_SIMILARY = 0.2;
+
 }

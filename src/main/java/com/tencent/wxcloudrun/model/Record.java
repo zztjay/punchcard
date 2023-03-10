@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 public class Record {
     public static final int PUNCHCARD_TYPE_SPORTS = 1;
     public static final int PUNCHCARD_TYPE_FOOD = 2;
-
     public static final int PUNCHCARD_TYPE_WEIGHT = 3;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

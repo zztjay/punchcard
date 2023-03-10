@@ -1,21 +1,13 @@
 package com.tencent.wxcloudrun.service;
 
-import com.tencent.wxcloudrun.adaptor.MessageSendAdaptor;
-import com.tencent.wxcloudrun.common.LoginContext;
-import com.tencent.wxcloudrun.constants.CommandEnum;
-import com.tencent.wxcloudrun.constants.MessageTemplateConstant;
-import com.tencent.wxcloudrun.constants.MsgArgumentEnum;
-import com.tencent.wxcloudrun.controller.CommandController;
-import com.tencent.wxcloudrun.dao.UsersMapper;
-import com.tencent.wxcloudrun.dto.*;
-import com.tencent.wxcloudrun.model.User;
-import com.tencent.wxcloudrun.strategy.Command;
-import com.tencent.wxcloudrun.util.DateUtil;
+import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.controller.CommandControllerNew;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+
+import static com.tencent.wxcloudrun.constants.CmdRegexConstant.normalContentRegex;
 
 /**
  * @Author：zhoutao
@@ -25,10 +17,24 @@ import javax.annotation.Resource;
 public class FullProductTest {
 
     @Resource
-    CommandController commandController;
+    CommandControllerNew commandController;
 
     @Test
     public void test() {
+
+
+        System.out.println(commandController.command("3.1日运动打卡原始体重：158斤，\n" +
+                "目标体重：110斤\n" +
+                "今日体重：138斤\n" +
+                "比昨天瘦：0.1斤\n" +
+                "原始体重运动  ：   走路5000步 ，力量训练60分钟 全身运动\n" +
+                "饮食控制：轻断食16+8，戒油腻\n" +
+                "早餐：豆浆，包子，全麦面包\n" +
+                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "晚餐：咖喱鸡肉饭\n" +
+                "加餐：水果"));
+
+        System.out.println("运动：   走路5000步 ，力量训练60分钟 全身运动".matches(normalContentRegex));
 
 //        System.out.println(commandController.command("创建减脂营"));
 //
@@ -53,6 +59,11 @@ public class FullProductTest {
 
 
 
+
     }
 
+    public static void main(String[] args) {
+        String regex = "((\\s*[,，])|(\\s+))";
+        System.out.println(" ，".matches(regex));
+    }
 }
