@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.tencent.wxcloudrun.constants.CmdRegexConstant.normalContentRegex;
-import static com.tencent.wxcloudrun.constants.CmdRegexConstant.onlyNormalContentRegex;
 import static com.tencent.wxcloudrun.constants.RegexContants.*;
 
 /**
@@ -178,9 +176,7 @@ public class RegexUtils {
       return getMatches(regex,str);
     }
 
-    public static void main(String[] args) {
-        System.out.println(getMatches(onlyNormalContentRegex, "走路5000步,力量训练60分钟,全身运动 "));
-    }
+
 
     /**
      * 获取正则匹配分组
@@ -227,14 +223,13 @@ public class RegexUtils {
      * @param regexB
      * @return
      */
-    public static String or(String regexA, String regexB) {
-        StringBuilder result = new StringBuilder();
-        result.append("(").append(regexA).append(")").append("|").append("(").append(regexB).append(")");
-        return result.toString();
+    public static StringBuilder or(String regexA, String regexB) {
+        return new StringBuilder().append("(").append(regexA).append(")").append("|").append("(").append(regexB).append(")");
     }
 
-
-
+    public static StringBuilder addBracket(String regexA) {
+        return new StringBuilder().append("(").append(regexA).append(")");
+    }
 
     public static boolean hasMatchParts(String str, String regex){
         return CollectionUtils.isNotEmpty(matchParts(str,regex));

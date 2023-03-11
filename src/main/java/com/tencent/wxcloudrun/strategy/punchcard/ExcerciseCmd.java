@@ -8,10 +8,8 @@ import com.tencent.wxcloudrun.constants.CmdRegexConstant;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Record;
 import com.tencent.wxcloudrun.service.PunchCardService;
-import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -23,7 +21,12 @@ import java.util.List;
  * @Date：2023/3/6 19:32
  */
 @Component
-public class SportsPunchCardCmd implements PunchCardCmd {
+public class ExcerciseCmd implements PunchCardCmd {
+    public static final String exerciseOnlyNormalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
+            "((\\s*[,，])|(\\s+))" + ")"; // 验证内容的字符串
+
+    public static final String exerciseNormalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
+            "((\\s*[,，])|(\\s+))" + ")*";
     @Resource
     PunchCardService punchCardService;
 
@@ -33,7 +36,10 @@ public class SportsPunchCardCmd implements PunchCardCmd {
 
         String cmdData = inputCmd.replaceFirst(cmdPrexReg(),"");
         if(!RegexUtils.hasMatchParts(cmdData,CmdRegexConstant.nodoRegex)){
-            exerciseDatas.addAll(RegexUtils.matchParts(cmdData, dataReg()));
+            List<String> matchParts = RegexUtils.matchParts(cmdData, dataReg());
+            for (String matchPart : matchParts) {
+                exerciseDatas.add(matchPart.replaceAll(",",""));
+            }
         }
 
         JSONObject data = new JSONObject();
@@ -45,7 +51,7 @@ public class SportsPunchCardCmd implements PunchCardCmd {
     public ApiResponse execute(String date, String commandRequest, JSONObject data, LoginInfo loginInfo) {
         JSONArray exerciseDatas = data.getJSONArray("exerciseDatas");
         if( exerciseDatas != null &&  exerciseDatas.size() > 0) {
-            return punchCardService.punchcard(commandRequest,exerciseDatas.toJSONString(), date, loginInfo.getCampId(),
+            return punchCardService.punchcard(exerciseDatas.toJSONString(), date, loginInfo.getCampId(),
                     loginInfo.getWxId(), Record.PUNCHCARD_TYPE_SPORTS);
         }
         return ApiResponse.ok();
@@ -53,10 +59,8 @@ public class SportsPunchCardCmd implements PunchCardCmd {
 
     @Override
     public String dataReg() {
-        return CmdRegexConstant.onlyNormalContentRegex;
+        return exerciseOnlyNormalContentRegex;
     }
-
-
 
     @Override
     public String type() {
@@ -65,7 +69,7 @@ public class SportsPunchCardCmd implements PunchCardCmd {
 
     @Override
     public String cmdReg() {
-        return RegexUtils.or(doSportsRegex(), notDoSportsRegex());
+        return RegexUtils.or(doSportsRegex(), notDoSportsRegex()).toString();
     }
 
     @Override
@@ -75,7 +79,7 @@ public class SportsPunchCardCmd implements PunchCardCmd {
 
     protected String doSportsRegex(){
         return new StringBuilder().append(cmdPrexReg())
-                .append(CmdRegexConstant.normalContentRegex).toString();
+                .append(exerciseNormalContentRegex).toString();
     }
 
     protected String notDoSportsRegex(){

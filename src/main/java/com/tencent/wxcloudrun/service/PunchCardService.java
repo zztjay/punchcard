@@ -68,7 +68,7 @@ public class PunchCardService {
      *
      * @return API response json
      */
-    public ApiResponse punchcard(String content, String formatContent,
+    public ApiResponse punchcard(String content,
                                  String punchCardTime, Long campId, String wxId, int type) {
         Record record = getRecord(campId, wxId, punchCardTime, type);
         if (null == record) {
@@ -77,12 +77,10 @@ public class PunchCardService {
             record.setType(type);
             record.setPunchCardTime(punchCardTime);
             record.setMemberWxId(wxId);
-            record.setFormatContent(formatContent);
             record.setCampId(campId);
             punchCardMapper.insert(record);
         } else {
             record.setContent(content);
-            record.setFormatContent(formatContent);
             record.setUpdatedAt(LocalDateTime.now());
             punchCardMapper.updateByPrimaryKeySelective(record);
         }

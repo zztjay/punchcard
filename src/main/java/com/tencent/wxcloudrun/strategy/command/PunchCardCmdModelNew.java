@@ -7,6 +7,8 @@ import com.tencent.wxcloudrun.constants.CommonConstants;
 import com.tencent.wxcloudrun.constants.RegexContants;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
+import com.tencent.wxcloudrun.model.Record;
+import com.tencent.wxcloudrun.service.PunchCardService;
 import com.tencent.wxcloudrun.strategy.ModelFatory;
 import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
 import com.tencent.wxcloudrun.util.CmdRegexUtil;
@@ -31,6 +33,8 @@ import static com.tencent.wxcloudrun.constants.CmdRegexConstant.chTodayStrs;
  */
 @Component
 public class PunchCardCmdModelNew implements Command<String> {
+    @Resource
+    PunchCardService punchCardService;
     @Resource
     ModelFatory modelFatory;
 
@@ -104,9 +108,7 @@ public class PunchCardCmdModelNew implements Command<String> {
                 List<String> matchCmds = RegexUtils.matchParts(commandRequest, punchCardCmd.cmdReg());
                 for (String matchCmd : matchCmds) {
 
-                    System.out.println("匹配命令行：" + matchCmd);
-
-                    // 提取命令行数据
+                    // 提取命令所需数据
                     ApiResponse<JSONObject> dataResult = punchCardCmd.extractData(matchCmd);
                     if (!dataResult.isSuccess()) {
                         return dataResult;
@@ -120,6 +122,11 @@ public class PunchCardCmdModelNew implements Command<String> {
                 }
             }
         }
+
+        // 打卡数据入库
+        punchCardService.punchcard(commandRequest,punchcardDate,loginInfo.getCampId(),
+                loginInfo.getWxId(), Record.PUNCHCARD_TYPE_PUNCHCARD);
+
         return ApiResponse.ok();
     }
 

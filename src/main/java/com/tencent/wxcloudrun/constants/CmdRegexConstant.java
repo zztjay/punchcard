@@ -20,7 +20,7 @@ public class CmdRegexConstant {
 
     public static final String chDateRegex = "(近一周|近一月|近1周|近1月|今天|今日)";
 
-    public static final String numRegex = "([0-9]|[1-9][0-9]*)"; // 验证零和非零开头的数字
+    public static final String numRegex = "([0-9]|[1-9][0-9]{1,3})"; // 验证零和非零开头的数字
 
     public static final String dateRegex = "(0+[1-9]|1[0-2])((0+[1-9])|((1|2)[0-9])|30|31)"
             + "|(([1-9]|1[0-2])月(([1-9])|((1|2)[0-9])|30|31)日)"
@@ -29,51 +29,23 @@ public class CmdRegexConstant {
 
     public static final String heightNumRegex = numRegex + "(\\.\\d{1,2})?"; // 验证体重的数字
 
-    public static final String incOrDecrRegex = "[+,-]?"; // 增加或者减少
+    public static final String incOrDecrRegex = "[+-\\s]?"; // 增加或者减少
 
     public static final String splitRegex =  "[,，]?"; // 用于分隔字段的字符
 
     public static final String nodoRegex = "(没|无|没有)";  // 没有做的正则表达式
     public static final String mutipleSpaceRegex = "\\s*"; // 0个或多个空格分隔符
 
-    public static final String onlyNormalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
-            "((\\s*[,，])|(\\s+))" + ")"; // 验证内容的字符串
+
 
     public static final String normalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
             "((\\s*[,，])|(\\s+))" + ")*"; // 验证内容的字符串
 
     public static final String inputRegex =  "(\\s*[:：])"; // 开始输入的字符，0个或1个
 
-    public static final String weightUnit = "(公斤|斤)"; // 体重单位
-
-
-    public static String originWeightRegex(){
-        return new StringBuilder().append("原始体重").append(CmdRegexConstant.inputRegex)
-                .append(CmdRegexConstant.mutipleSpaceRegex)
-                .append(CmdRegexConstant.heightNumRegex).append(weightUnit).toString();
-    }
-
-    public static String goalWeightRegex(){
-        return new StringBuilder().append("目标体重").append(CmdRegexConstant.inputRegex)
-                .append(CmdRegexConstant.mutipleSpaceRegex)
-                .append(CmdRegexConstant.heightNumRegex).append(weightUnit).toString();
-    }
-
-    public static String todayWeightRegex(){
-        return new StringBuilder().append("今日体重").append(CmdRegexConstant.inputRegex)
-                .append(CmdRegexConstant.mutipleSpaceRegex)
-                .append(CmdRegexConstant.heightNumRegex).append(weightUnit).toString();
-    }
-
-    public static String weightThanYestodayRegex(){
-        return new StringBuilder().append("比昨天瘦").append(CmdRegexConstant.inputRegex)
-                .append(CmdRegexConstant.mutipleSpaceRegex).append(incOrDecrRegex)
-                .append(CmdRegexConstant.heightNumRegex).append(weightUnit).toString();
-    }
-
 
     public static String foodConstrictRegex(){
-        return RegexUtils.or(doFoodConstrictRegex(),notDoFoodConstrictRegex());
+        return RegexUtils.or(doFoodConstrictRegex(),notDoFoodConstrictRegex()).toString();
     }
 
 
