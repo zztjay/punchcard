@@ -33,7 +33,7 @@ public class CmdRegexConstant {
 
     public static final String splitRegex =  "[,，]?"; // 用于分隔字段的字符
 
-    public static final String nodoRegex = "(没|无|没有)";  // 没有做的正则表达式
+    public static final String nodoRegex = "(没|无|没有|没做)";  // 没有做的正则表达式
     public static final String mutipleSpaceRegex = "\\s*"; // 0个或多个空格分隔符
 
 

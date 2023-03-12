@@ -50,16 +50,16 @@ public class PunchCardService {
      */
     public void delete(Long campId, String punchCardDate, String wxId) {
 
-        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_PUNCHCARD);
+        delete(campId,punchCardDate, wxId, Record.PUNCHCARD_TYPE_PUNCHCARD);
 
         // 删除食物打卡
-        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_FOOD);
+        delete(campId, punchCardDate, wxId, Record.PUNCHCARD_TYPE_FOOD);
 
         // 删除运动打卡
-        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_SPORTS);
+        delete(campId, punchCardDate, wxId, Record.PUNCHCARD_TYPE_SPORTS);
 
         // 删除体重打卡
-        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_WEIGHT);
+        delete(campId, punchCardDate, wxId, Record.PUNCHCARD_TYPE_WEIGHT);
 
     }
 

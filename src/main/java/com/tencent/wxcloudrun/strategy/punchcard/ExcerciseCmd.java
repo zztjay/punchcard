@@ -34,7 +34,6 @@ public class ExcerciseCmd implements PunchCardCmd {
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
         List<String> exerciseDatas  = new ArrayList<>();
-
         String cmdData = inputCmd.replaceFirst(cmdPrexReg(),"");
         if(!RegexUtils.hasMatchParts(cmdData,CmdRegexConstant.nodoRegex)){
             List<String> matchParts = RegexUtils.matchParts(cmdData, dataReg());
@@ -71,7 +70,7 @@ public class ExcerciseCmd implements PunchCardCmd {
 
     @Override
     public String cmdReg() {
-        return RegexUtils.or(doSportsRegex(), notDoSportsRegex()).toString();
+        return doSportsRegex();
     }
 
     @Override
