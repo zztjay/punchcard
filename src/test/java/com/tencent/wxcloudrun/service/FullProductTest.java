@@ -23,18 +23,25 @@ public class FullProductTest {
     public void test() {
 
 
-        System.out.println(commandController.command("3.1日运动打卡原始体重：158斤，\n" +
+        System.out.println(commandController.command("3.1日\n" + "原始体重：158斤，\n" +
                 "目标体重：110斤\n" +
                 "今日体重：138斤\n" +
                 "比昨天瘦：0.1斤\n" +
-                "原始体重： 走路5000步 ，力量训练60分钟 全身运动\n" +
-                "饮食控制：轻断食16+8，戒油腻\n" +
+                "运动： 走路5000步 ，力量训练60分钟 全身运动\n" +
                 "早餐：豆浆，包子，全麦面包\n" +
                 "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
                 "晚餐：咖喱鸡肉饭\n" +
-                "加餐：水果"));
+                "加餐：水果 @韬合"));
 
-        System.out.println("运动：   走路5000步 ，力量训练60分钟 全身运动".matches(normalContentRegex));
+        System.out.println(commandController.command("3.1日\n" + "原始体重：158斤，\n" +
+                "目标体重：110斤\n" +
+                "今日体重：138斤\n" +
+                "比昨天瘦：0.1斤\n" +
+                "运动： 走路5000步 ，力量训练60分钟 全身运动\n" +
+                "早餐：豆浆，包子，全麦面包 \n" +
+                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "晚餐：咖喱鸡肉饭\n" +
+                "加餐：水果"));
 
 //        System.out.println(commandController.command("创建减脂营"));
 //
@@ -63,7 +70,8 @@ public class FullProductTest {
     }
 
     public static void main(String[] args) {
-        String regex = "((\\s*[,，])|(\\s+))";
-        System.out.println(" ，".matches(regex));
+        String regex = ".";
+        System.out.println("3.1".contains(regex));
+        System.out.println(regex);
     }
 }

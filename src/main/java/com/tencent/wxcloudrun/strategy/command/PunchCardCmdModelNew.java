@@ -68,7 +68,7 @@ public class PunchCardCmdModelNew implements Command<String> {
                 dateStr = year + "年" + dateStr;
                 data.put("punchcardDate", DateUtil.getDate2Str(DateUtil.DATE_FORMAT_PATTERN
                         , DateUtil.getStrToDate("yyyy年MM月dd日", dateStr)));
-            } else if (dateStr.contains("\\.")) {
+            } else if (dateStr.contains(".")) {
                 dateStr = year + "." + dateStr;
                 data.put("punchcardDate", DateUtil.getDate2Str(DateUtil.DATE_FORMAT_PATTERN
                         , DateUtil.getStrToDate("yyyy.MM.dd", dateStr)));
@@ -95,9 +95,16 @@ public class PunchCardCmdModelNew implements Command<String> {
 
     @Override
     public ApiResponse execute(String commandRequest, JSONObject data, LoginInfo loginInfo) {
-
         String punchcardDate = data.getString("punchcardDate");
 
+        // 打卡数据重置
+        Record record = punchCardService.getRecord(loginInfo.getCampId(), loginInfo.getWxId(), punchcardDate,
+                Record.PUNCHCARD_TYPE_PUNCHCARD);
+        if (null != record) {
+                punchCardService.delete(loginInfo.getCampId(),punchcardDate,loginInfo.getWxId());
+        }
+
+        // 执行打卡子命令
         List<String> matchPunchCardCmds = JSONObject.parseArray(data.getJSONArray("matchPunchCardCmds").toJSONString()
                 , String.class);
 
@@ -124,7 +131,7 @@ public class PunchCardCmdModelNew implements Command<String> {
         }
 
         // 打卡数据入库
-        punchCardService.punchcard(commandRequest,punchcardDate,loginInfo.getCampId(),
+        punchCardService.punchcard(commandRequest, punchcardDate, loginInfo.getCampId(),
                 loginInfo.getWxId(), Record.PUNCHCARD_TYPE_PUNCHCARD);
 
         return ApiResponse.ok();
@@ -154,7 +161,6 @@ public class PunchCardCmdModelNew implements Command<String> {
                 "运动：走路5000步，力量训练60分钟\n" +
                 "饮食控制：轻断食16+8，戒油腻");
     }
-
 
 
     @Override

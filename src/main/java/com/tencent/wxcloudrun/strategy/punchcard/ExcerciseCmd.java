@@ -26,7 +26,8 @@ public class ExcerciseCmd implements PunchCardCmd {
             "((\\s*[,，])|(\\s+))" + ")"; // 验证内容的字符串
 
     public static final String exerciseNormalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
-            "((\\s*[,，])|(\\s+))" + ")*";
+            "((\\s*[,，])|(\\s*))" + ")+";
+
     @Resource
     PunchCardService punchCardService;
 
@@ -38,7 +39,8 @@ public class ExcerciseCmd implements PunchCardCmd {
         if(!RegexUtils.hasMatchParts(cmdData,CmdRegexConstant.nodoRegex)){
             List<String> matchParts = RegexUtils.matchParts(cmdData, dataReg());
             for (String matchPart : matchParts) {
-                exerciseDatas.add(matchPart.replaceAll(",",""));
+                exerciseDatas.add(matchPart.replaceAll(",","").replaceAll("，","")
+                        .replaceAll("\\s",""));
             }
         }
 

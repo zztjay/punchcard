@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.strategy;
+package com.tencent.wxcloudrun.strategy.punchcard;
 
 
 import com.alibaba.fastjson.JSONArray;
@@ -12,8 +12,10 @@ import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,46 +31,39 @@ public abstract class AbstractFoodCmd implements PunchCardCmd {
     PunchCardService punchCardService;
 
     public static final String normalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
-            "((\\s*[,，])|(\\s+))" + ")*"; // 验证内容的字符串
+            "((\\s*[,，])|(\\s*))" + ")+"; // 验证内容的字符串
+
+    public static final String onlyNormalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
+            "((\\s*[,，])|(\\s*))" + ")"; // 验证内容的字符串
 
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
+
         JSONObject result = new JSONObject();
-        List<String> datas = RegexUtils.getMatches(dataReg(),inputCmd);
-        result.put("foods", datas);
+
+        List<String> foods = new ArrayList<>();
+        List<String> matchParts = RegexUtils.getMatches(dataReg(), inputCmd.replaceFirst(cmdPrexReg(),""));
+        for (String matchPart : matchParts) {
+            foods.add(matchPart.replaceAll(",","").replaceAll("，","")
+                    .replaceAll("\\s",""));
+        }
+        result.put("foods", foods);
         return ApiResponse.ok(result);
     }
-
 
     @Override
     public ApiResponse execute(String date, String commandRequest, JSONObject data, LoginInfo loginInfo) {
         Record record = punchCardService.getRecord(loginInfo.getCampId(),loginInfo.getWxId(), date,
                 Record.PUNCHCARD_TYPE_FOOD);
 
-        JSONArray weightContents = new JSONArray();
+        JSONObject foodContents = new JSONObject();
         if(record != null){
-            // 获取现有的体重消息
-            String content = record.getContent();
-            if(!StringUtils.isEmpty(content)){
-                weightContents = JSONArray.parseArray(content);
-            }
-            // 增加本次体重信息
-            if(!data.isEmpty()){
-                JSONObject weightContent = new JSONObject();
-                weightContent.put(type(), data.getString("food"));
-                weightContents.add(weightContent);
-            }
-        } else {
-            // 增加本次体重信息
-            if(!data.isEmpty()){
-                JSONObject weightContent = new JSONObject();
-                weightContent.put(type(), data.getString("weight"));
-                weightContents.add(weightContent);
-            }
+            foodContents = JSONObject.parseObject(record.getContent());
         }
+        foodContents.put(type(), data.getJSONArray("foods"));
 
         // 执行打卡
-        punchCardService.punchcard(weightContents.toJSONString(),date,loginInfo.getCampId(),
+        punchCardService.punchcard(foodContents.toJSONString(),date,loginInfo.getCampId(),
                 loginInfo.getWxId(),Record.PUNCHCARD_TYPE_FOOD);
         return ApiResponse.ok();
     }
@@ -78,18 +73,25 @@ public abstract class AbstractFoodCmd implements PunchCardCmd {
 
     @Override
     public String cmdReg() {
-        return new StringBuilder(cmdPrexReg()).append(dataReg()).toString();
+        return new StringBuilder(cmdPrexReg()).append(normalContentRegex).toString();
     }
 
     @Override
-    public  String cmdPrexReg(){
+    public String cmdPrexReg(){
         return new StringBuilder("[\\s]*").append(type()).append(CmdRegexConstant.inputRegex)
                 .append(CmdRegexConstant.mutipleSpaceRegex).toString();
     }
 
+    public static void main(String[] args) {
+        String a = "水果\n";
+        String normalContentRegex =  "([\\u4E00-\\u9FA5A-Za-z0-9\\+]+" +
+                "((\\s*[,，])|(\\s*))" + ")*"; // 验证内容的字符串
+        System.out.println(RegexUtils.getMatches(normalContentRegex,a));
+//        System.out.println(new AddFoodCmd().cmdReg());
+    }
     @Override
     public String dataReg() {
-        return normalContentRegex;
+        return onlyNormalContentRegex;
     }
 
 }

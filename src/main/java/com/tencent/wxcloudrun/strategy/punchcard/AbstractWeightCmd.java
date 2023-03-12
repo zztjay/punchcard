@@ -23,8 +23,6 @@ import java.util.List;
         @Resource
         PunchCardService punchCardService;
 
-        @Resource
-
         public static final String heightNumRegex = "([0-9]|[1-9][0-9]{1,3})" + "(\\.\\d{1,2})?"; // 验证体重的数字
 
         @Override
@@ -43,30 +41,14 @@ import java.util.List;
 
             Record record = punchCardService.getRecord(loginInfo.getCampId(),loginInfo.getWxId(), date, Record.PUNCHCARD_TYPE_WEIGHT);
 
-            JSONArray weightContents = new JSONArray();
+            JSONObject weightContent = new JSONObject();
             if(record != null){
-                // 获取现有的体重消息
-                String content = record.getContent();
-                if(!StringUtils.isEmpty(content)){
-                    weightContents = JSONArray.parseArray(content);
-                }
-                // 增加本次体重信息
-                if(!data.isEmpty()){
-                    JSONObject weightContent = new JSONObject();
-                    weightContent.put(type(), data.getString("weight"));
-                    weightContents.add(weightContent);
-                }
-            } else {
-                // 增加本次体重信息
-                if(!data.isEmpty()){
-                    JSONObject weightContent = new JSONObject();
-                    weightContent.put(type(), data.getString("weight"));
-                    weightContents.add(weightContent);
-                }
+                weightContent = JSONObject.parseObject(record.getContent());
             }
+            weightContent.put(type(), data.getString("weight"));
 
             // 执行打卡
-            punchCardService.punchcard(weightContents.toJSONString(),date,loginInfo.getCampId(),
+            punchCardService.punchcard(weightContent.toJSONString(),date,loginInfo.getCampId(),
                     loginInfo.getWxId(),Record.PUNCHCARD_TYPE_WEIGHT);
             return ApiResponse.ok();
         }

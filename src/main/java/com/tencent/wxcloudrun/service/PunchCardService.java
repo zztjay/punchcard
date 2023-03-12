@@ -50,6 +50,8 @@ public class PunchCardService {
      */
     public void delete(Long campId, String punchCardDate, String wxId) {
 
+        delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_PUNCHCARD);
+
         // 删除食物打卡
         delete(campId, wxId, punchCardDate, Record.PUNCHCARD_TYPE_FOOD);
 

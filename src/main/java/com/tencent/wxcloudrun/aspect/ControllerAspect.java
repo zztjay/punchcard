@@ -80,7 +80,7 @@ public class ControllerAspect {
         loginInfo.setWxId("zztjay");
         loginInfo.setWxName("韬（微信名称）");
         loginInfo.setWxGroupName("韬合（微信群名称）");
-        loginInfo.setGroupId("周末减脂小分队id");
+        loginInfo.setGroupId("43575898011@chatroom");
 
         // 设置减脂营信息
         Camp camp = campService.getCampByGid(loginInfo.getGroupId());

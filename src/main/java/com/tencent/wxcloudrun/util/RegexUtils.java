@@ -168,7 +168,7 @@ public class RegexUtils {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            matches.add(matcher.group());
+            matches.add(matcher.group(0));
         }
         return matches;
     }
