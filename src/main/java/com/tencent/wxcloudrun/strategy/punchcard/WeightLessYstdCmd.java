@@ -13,18 +13,7 @@ import org.springframework.stereotype.Component;
  * @Date：2023/3/6 19:32
  */
 @Component
-public class WeightLessYstdCmd implements PunchCardCmd {
-    public static final String heightNumRegex = "([0-9]|[1-9][0-9]{1,3})" + "(\\.\\d{1,2})?"; // 验证体重的数字
-
-    @Override
-    public ApiResponse<JSONObject> extractData(String inputCmd) {
-        return null;
-    }
-
-    @Override
-    public ApiResponse execute(String date, String commandRequest, JSONObject data, LoginInfo loginInfo) {
-        return null;
-    }
+public class WeightLessYstdCmd extends AbstractWeightCmd {
 
     @Override
     public String type() {
@@ -32,17 +21,6 @@ public class WeightLessYstdCmd implements PunchCardCmd {
     }
 
     @Override
-    public String cmdReg() {
-        return new StringBuilder().append(cmdPrexReg())
-                .append(heightNumRegex).toString();
-    }
-
-    @Override
     public String cmdPrexReg() {
         return "[\\s]*比昨天瘦" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex; }
-
-    @Override
-    public String dataReg() {
-        return heightNumRegex;
-    }
 }

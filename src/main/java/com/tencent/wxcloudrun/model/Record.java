@@ -36,6 +36,5 @@ public class Record {
     private Integer type; // 打卡类型，1:运动，2:食物，3：减肥
     private String content; //用户打卡文本内容，使用json结构存储
     private String punchCardTime; // 打卡日期，YYYYMMDD
-    private String formatContent; // 提取核心字段，格式化后的数据
     private String quantity;  // 具体数量，运动：千卡，食物：千卡，减肥：斤数
 }

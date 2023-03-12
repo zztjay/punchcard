@@ -44,10 +44,6 @@ public class CmdRegexConstant {
     public static final String inputRegex =  "(\\s*[:：])"; // 开始输入的字符，0个或1个
 
 
-    public static String foodConstrictRegex(){
-        return RegexUtils.or(doFoodConstrictRegex(),notDoFoodConstrictRegex()).toString();
-    }
-
 
     public static String doFoodConstrictRegex(){
         return new StringBuilder().append("饮食控制").append(CmdRegexConstant.inputRegex)
