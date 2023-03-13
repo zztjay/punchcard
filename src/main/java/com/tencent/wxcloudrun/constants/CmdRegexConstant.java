@@ -29,7 +29,7 @@ public class CmdRegexConstant {
 
     public static final String heightNumRegex = numRegex + "(\\.\\d{1,2})?"; // 验证体重的数字
 
-    public static final String incOrDecrRegex = "[+-\\s]?"; // 增加或者减少
+    public static final String incOrDecrRegex = "[+-]?"; // 增加或者减少
 
     public static final String splitRegex =  "[,，]?"; // 用于分隔字段的字符
 

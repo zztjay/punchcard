@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.strategy.punchcard;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CmdRegexConstant;
+import com.tencent.wxcloudrun.constants.RegexContants;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.service.MemberService;
