@@ -104,7 +104,7 @@ public class PunchCardCmdModel implements Command<String> {
         Record record = punchCardService.getRecord(loginInfo.getCampId(), loginInfo.getWxId(), punchcardDate,
                 Record.PUNCHCARD_TYPE_PUNCHCARD);
         if (null != record) {
-                punchCardService.delete(loginInfo.getCampId(),punchcardDate,loginInfo.getWxId());
+            punchCardService.delete(loginInfo.getCampId(), punchcardDate, loginInfo.getWxId());
         }
 
         // 执行打卡子命令
@@ -148,16 +148,53 @@ public class PunchCardCmdModel implements Command<String> {
                 loginInfo.getCampId(), Record.PUNCHCARD_TYPE_PUNCHCARD);
 
         Member member = membersMapper.selectByWxId(loginInfo.getWxId(), loginInfo.getCampId());
-        String userWeight = punchCardMapper.getUserWeight(loginInfo.getWxId(),loginInfo.getCampId());
-        if(StringUtils.isNotEmpty(userWeight) && StringUtils.isNotEmpty(member.getGoalWeight())){
-            BigDecimal leftWeight = new BigDecimal(userWeight).subtract(new BigDecimal(member.getGoalWeight()));
-            if(leftWeight.compareTo(new BigDecimal(0)) > 0){
-                return new StringBuilder("您已累计打卡").append(punchCardCount).append("天,").append("离目标体重还差")
-                        .append(leftWeight.setScale(2).doubleValue()).append("斤，").append("继续加油吧！").toString();
+        String userWeightToday = punchCardMapper.getUserWeight(loginInfo.getWxId(), loginInfo.getCampId(), DateUtil.getToday());
+
+        // 打卡成功提示文案
+        StringBuilder weightLessText = new StringBuilder();
+        StringBuilder weightLessGoalText = new StringBuilder();
+        if (StringUtils.isNotEmpty(userWeightToday)) {
+
+            // 对比昨天体重
+            String yesterdayWeight = punchCardMapper.getUserWeight(loginInfo.getWxId(), loginInfo.getCampId(),
+                    DateUtil.getYesterday());
+            if (StringUtils.isNotEmpty(yesterdayWeight)) {
+                BigDecimal weightLess = new BigDecimal(yesterdayWeight).subtract(new BigDecimal(userWeightToday));
+                if (weightLess.compareTo(new BigDecimal(0)) > 0) {
+                    weightLessText.append("比昨天轻").append(weightLess.setScale(2).doubleValue()).append("斤");
+                }
+            } else {
+                String userWeightLastTime = punchCardMapper.getUserWeightLastTime(loginInfo.getWxId(),
+                        loginInfo.getCampId(), DateUtil.getToday());
+                if (StringUtils.isNotEmpty(userWeightLastTime)) {
+                    BigDecimal weightLess = new BigDecimal(userWeightLastTime).subtract(new BigDecimal(userWeightToday));
+                    if (weightLess.compareTo(new BigDecimal(0)) > 0) {
+                        weightLessText.append("比上一次打卡轻").append(weightLess.setScale(2).doubleValue()).append("斤，");
+                    }
+                }
+            }
+
+            // 和目标体重比
+            if (StringUtils.isNotEmpty(member.getGoalWeight())) {
+                BigDecimal leftWeight = new BigDecimal(userWeightToday).subtract(new BigDecimal(member.getGoalWeight()));
+                if (leftWeight.compareTo(new BigDecimal(0)) > 0) {
+                    weightLessGoalText.append("离目标体重还差").append(leftWeight.setScale(2).doubleValue()).append("斤");
+                }
             }
         }
 
-        return new StringBuilder("您已累计打卡").append(punchCardCount).append("天,继续加油吧！").toString();
+        // 构建返回文案
+        StringBuilder returnText = new StringBuilder("打卡成功，");
+        if (!StringUtils.isEmpty(weightLessText)) {
+            returnText.append(weightLessText).append("，");
+        }
+        returnText.append("您已累计打卡").append(punchCardCount).append("天，");
+        if (!StringUtils.isEmpty(weightLessGoalText)) {
+            returnText.append(weightLessGoalText).append("，");
+        }
+        returnText.append("继续加油吧！");
+
+        return returnText.toString();
     }
 
     @Override

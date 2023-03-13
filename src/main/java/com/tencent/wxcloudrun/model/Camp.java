@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @Data
 @NameStyle(Style.normal)
 public class Camp implements Serializable {
-    public static final int IS_SUPPORT_REPUNCHCRD = 1;
-    public static final int IS_NOT_SUPPORT_REPUNCHCRD = 0;
+    public static final int PUNCHCARD_TYPE_LOSE_WEIGHT = 1;
+    public static final int PUNCHCARD_TYPE_EXERCISE = 2;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,6 +29,7 @@ public class Camp implements Serializable {
     private LocalDateTime updatedAt;// 修改时间
     private String  campName; // 训练营名称
     private String groupId; // 归属群id
+    private int type = PUNCHCARD_TYPE_LOSE_WEIGHT; // 1: 减肥，2: 运动健身
     private String  createrName; // 活动创建者名称
     private String  createrWxId; // 活动创建者的wxId
     private String  createrOpenId; // 活动创建者的openId

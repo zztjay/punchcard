@@ -79,13 +79,40 @@
 
 
     <select
-            id="getUserWeight"
+            id="getUserWeightToday"
             resultType="java.lang.String">
         SELECT
             quantity
-        FROM Records
+        FROM
+            Records
         WHERE
-            campId = #{campId} and memberWxId = #{wxId} and type = 3
+            campId = #{campId} and memberWxId = #{wxId} and type = 3 and
+                punchCardTime = #{punchCardDate} and quantity is not null
+    </select>
+
+    <select
+            id="getUserWeightLastTime"
+            resultType="java.lang.String">
+        SELECT
+            quantity
+        FROM
+            Records
+        WHERE
+            campId = #{campId} and memberWxId = #{wxId} and type = 3 and
+            punchCardTime != #{today} and quantity is not null
+            order by punchCardTime desc limit 1
+    </select>
+
+    <select
+            id="getUserWeightToday"
+            resultType="java.lang.String">
+        SELECT
+            quantity
+        FROM
+            Records
+        WHERE
+            campId = #{campId} and memberWxId = #{wxId} and type = 3 and quantity is not null and
+                punchCardTime > #{start}  and punchCardTime  <![CDATA[ <= ]]>  #{end}
         order by punchCardTime desc limit 1
     </select>
 </mapper>

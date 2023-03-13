@@ -56,7 +56,7 @@ public class CampService {
         // 检查群里是否重复创建
         List<Camp> activities = campMapper.query(new CampQuery(camp.getGroupId()));
         if (!CollectionUtils.isEmpty(activities)) {
-            return ApiResponse.error("CAMP_REPEATED_CREAT", "减脂营已创建");
+            return ApiResponse.error("CAMP_REPEATED_CREAT", "减肥打卡统计已开启");
         }
         if (camp.getId() != null && camp.getId() > 0L) {
             campMapper.updateByPrimaryKey(camp);

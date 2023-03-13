@@ -6,8 +6,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.strategy.ModelFatory;
 import com.tencent.wxcloudrun.strategy.command.Command;
-import com.tencent.wxcloudrun.strategy.command.CreateCampCmd;
-import com.tencent.wxcloudrun.util.CmdRegexUtil;
+import com.tencent.wxcloudrun.strategy.command.CreateLwCampCmd;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,7 +55,7 @@ public class CommandControllerNew {
                     }
 
                     // 一开始还没有减脂营，需要开启
-                    if (commandModel.getClass() == CreateCampCmd.class && LoginContext.getCampId() == null) {
+                    if (commandModel.getClass() == CreateLwCampCmd.class && LoginContext.getCampId() == null) {
                         return ApiResponse.error("GROUP_NO_CAMP", "本群还未创建减脂营，请管理员创建");
                     }
 
