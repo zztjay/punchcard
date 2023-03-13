@@ -5,6 +5,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.util.RegexUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @Author：zhoutao
  * @Date：2023/3/13 16:52
  */
+@Component
 public class JoinGroupHelpCmd implements Command<String> {
 
     @Override
@@ -24,7 +26,7 @@ public class JoinGroupHelpCmd implements Command<String> {
 
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
-        return ApiResponse.ok();
+        return ApiResponse.ok(new JSONObject());
     }
 
     @Override
@@ -62,6 +64,10 @@ public class JoinGroupHelpCmd implements Command<String> {
 
     @Override
     public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN);
+        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(RegexUtils.getMatches("新人入群帮助","新人入群帮助"));
     }
 }

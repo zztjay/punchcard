@@ -23,7 +23,16 @@ public class FullProductTest {
     public void test() {
 
 
-        System.out.println(commandController.command("3.1日\n" + "原始体重：158斤，\n" +
+        System.out.println(commandController.command("加好友帮助"));
+
+        System.out.println(commandController.command("新人入群帮助"));
+
+        System.out.println(commandController.command("开启减肥打卡统计功能"));
+
+        System.out.println(commandController.command("我的原始体重为150斤"));
+        System.out.println(commandController.command("我的目标体重为110斤"));
+
+        System.out.println(commandController.command("原始体重：158斤，\n" +
                 "目标体重：110斤\n" +
                 "今日体重：138斤\n" +
                 "比昨天瘦：0.1斤\n" +

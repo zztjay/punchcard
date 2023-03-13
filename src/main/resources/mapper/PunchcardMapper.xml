@@ -79,7 +79,7 @@
 
 
     <select
-            id="getUserWeightToday"
+            id="getUserWeight"
             resultType="java.lang.String">
         SELECT
             quantity
@@ -104,7 +104,7 @@
     </select>
 
     <select
-            id="getUserWeightToday"
+            id="getUserWeightLastWeek"
             resultType="java.lang.String">
         SELECT
             quantity

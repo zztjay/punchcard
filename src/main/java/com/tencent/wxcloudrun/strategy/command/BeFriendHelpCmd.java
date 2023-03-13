@@ -5,6 +5,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.util.RegexUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  * @Author：zhoutao
  * @Date：2023/3/13 16:52
  */
-public class BefriendHelpCmd implements Command<String> {
+@Component
+public class BeFriendHelpCmd implements Command<String> {
 
     @Override
     public boolean isMatch(String inputCmd) {
@@ -24,7 +26,7 @@ public class BefriendHelpCmd implements Command<String> {
 
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
-        return ApiResponse.ok();
+        return ApiResponse.ok(new JSONObject());
     }
 
     @Override
@@ -58,6 +60,6 @@ public class BefriendHelpCmd implements Command<String> {
 
     @Override
     public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN);
+        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL);
     }
 }

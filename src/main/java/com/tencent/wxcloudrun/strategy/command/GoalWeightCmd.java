@@ -46,7 +46,7 @@ public class GoalWeightCmd implements Command<String> {
         } else if (matches.size() == 1) {
             data.put("weight", matches.get(0));
         }
-        return ApiResponse.ok();
+        return ApiResponse.ok(data);
     }
 
     @Override
