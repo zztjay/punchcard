@@ -25,7 +25,7 @@ public class TodayWeightCmd extends AbstractWeightCmd {
 
     @Override
     public String cmdPrexReg() {
-        return "[\\s]*今日(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex;
+        return "今日(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex;
     }
 
     @Override

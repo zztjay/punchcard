@@ -23,7 +23,7 @@ import java.util.List;
         @Resource
         PunchCardService punchCardService;
 
-        public static final String heightNumRegex = "(([1-9][0-9]{1,3})(\\.\\d{1,2})?)|([0-9](\\.\\d{1,2})?)"; // 验证体重的数字
+        public static final String heightNumRegex = "((([1-9][0-9]{1,3})(\\.\\d{1,2})?)|([0-9](\\.\\d{1,2})?))"; // 验证体重的数字
 
         @Override
         public ApiResponse<JSONObject> extractData(String inputCmd) {

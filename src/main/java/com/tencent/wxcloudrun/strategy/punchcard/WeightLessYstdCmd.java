@@ -22,5 +22,5 @@ public class WeightLessYstdCmd extends AbstractWeightCmd {
 
     @Override
     public String cmdPrexReg() {
-        return "[\\s]*比昨天瘦" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex; }
+        return "比昨天瘦" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex; }
 }

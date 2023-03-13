@@ -12,6 +12,5 @@ import java.util.List;
 public interface PunchCardMapper extends Mapper<Record> {
     List<Record> query(PunchCardQuery query);
     int count(PunchCardQuery query);
-
-
+    String getUserWeight(@Param("wxId")String wxId,@Param("campId") Long campId);
 }

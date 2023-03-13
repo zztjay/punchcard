@@ -29,7 +29,7 @@ public class GoalWeightCmd extends AbstractWeightCmd {
 
     @Override
     public String cmdPrexReg() {
-       return "[\\s]*目标(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex; }
+       return "目标(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex; }
 
 
     @Override

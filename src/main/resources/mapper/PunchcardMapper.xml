@@ -76,4 +76,16 @@
         </if>
 
     </select>
+
+
+    <select
+            id="getUserWeight"
+            resultType="java.lang.String">
+        SELECT
+            quantity
+        FROM Records
+        WHERE
+            campId = #{campId} and memberWxId = #{wxId} and type = 3
+        order by punchCardTime desc limit 1
+    </select>
 </mapper>

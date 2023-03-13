@@ -3,18 +3,23 @@ package com.tencent.wxcloudrun.strategy.command;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.constants.CmdRegexConstant;
+import com.tencent.wxcloudrun.dao.MembersMapper;
+import com.tencent.wxcloudrun.dao.PunchCardMapper;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.model.Record;
+import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.service.PunchCardService;
 import com.tencent.wxcloudrun.strategy.ModelFatory;
 import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
 import com.tencent.wxcloudrun.util.DateUtil;
 import com.tencent.wxcloudrun.util.RegexUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -30,6 +35,11 @@ public class PunchCardCmdModel implements Command<String> {
     PunchCardService punchCardService;
     @Resource
     ModelFatory modelFatory;
+
+    @Resource
+    PunchCardMapper punchCardMapper;
+    @Resource
+    MembersMapper membersMapper;
 
     List<String> PUNCH_CARD_KEY_WORDS = Arrays.asList("打卡", "减肥打卡", "运动打卡", "健身打卡", "食物打卡");
 
@@ -132,13 +142,22 @@ public class PunchCardCmdModel implements Command<String> {
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
+
         // 累计打卡天数，累计减重xx斤，继续要加油
         int punchCardCount = punchCardService.count(loginInfo.getWxId(),
                 loginInfo.getCampId(), Record.PUNCHCARD_TYPE_PUNCHCARD);
 
-        // 累计减重 todo
+        Member member = membersMapper.selectByWxId(loginInfo.getWxId(), loginInfo.getCampId());
+        String userWeight = punchCardMapper.getUserWeight(loginInfo.getWxId(),loginInfo.getCampId());
+        if(StringUtils.isNotEmpty(userWeight) && StringUtils.isNotEmpty(member.getGoalWeight())){
+            BigDecimal leftWeight = new BigDecimal(userWeight).subtract(new BigDecimal(member.getGoalWeight()));
+            if(leftWeight.compareTo(new BigDecimal(0)) > 0){
+                return new StringBuilder("您已累计打卡").append(punchCardCount).append("天,").append("离目标体重还差")
+                        .append(leftWeight.setScale(2).doubleValue()).append("斤，").append("继续加油吧！").toString();
+            }
+        }
 
-        return null;
+        return new StringBuilder("您已累计打卡").append(punchCardCount).append("天,继续加油吧！").toString();
     }
 
     @Override

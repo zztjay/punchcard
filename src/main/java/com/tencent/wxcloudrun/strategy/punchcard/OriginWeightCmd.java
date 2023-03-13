@@ -35,7 +35,7 @@ public class OriginWeightCmd extends AbstractWeightCmd {
 
     @Override
     public String cmdPrexReg() {
-        return "[\\s]*原始(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex;
+        return "原始(体重)?" + CmdRegexConstant.inputRegex + CmdRegexConstant.mutipleSpaceRegex ;
     }
 
 
