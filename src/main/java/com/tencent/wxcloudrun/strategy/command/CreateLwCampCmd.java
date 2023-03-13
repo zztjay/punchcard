@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 创建减脂营
+ * 开启减肥打卡统计功能
  *
  * @Author：zhoutao
  * @Date：2023/3/7 12:19
@@ -28,10 +28,7 @@ public class CreateLwCampCmd implements Command<String> {
 
     @Override
     public boolean isMatch(String inputCmd) {
-        if (RegexUtils.hasMatchParts(inputCmd, commandReg())) {
-            return true;
-        }
-        return false;
+       return RegexUtils.hasMatchParts(inputCmd, commandReg());
     }
 
     @Override
@@ -54,8 +51,8 @@ public class CreateLwCampCmd implements Command<String> {
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
 
         return new StringBuilder("“群减肥打卡统计功能”开启成功，以下是打卡帮助：\n\n" +
-                "Step1：输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，并@打卡助手，进行原始和目标体重信息设置\n\n" +
-                "Step2：按打卡模版进行打卡，并@打卡助手，请勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔\n\n" +
+                "Step1：输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，并@打卡小助手，进行原始和目标体重信息设置\n\n" +
+                "Step2：按打卡模版进行打卡，并@打卡小助手，请勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔\n\n" +
                 "今日体重：138斤\n" +
                 "运动：走路5000步，力量训练60分钟\n" +
                 "早餐：豆浆，包子，全麦面包\n" +
@@ -70,18 +67,18 @@ public class CreateLwCampCmd implements Command<String> {
 
     @Override
     public String commandName() {
-        return "开启减肥打卡统计";
+        return "开启减肥打卡统计功能";
     }
 
     @Override
     public String commandReg() {
-        return "[\\s]*开启减肥打卡统计[\\s]*";
+        return "[\\s]*开启减肥打卡统计功能[\\s]*";
     }
 
 
     @Override
     public List<String> examples() {
-        return Arrays.asList("开启减肥打卡统计");
+        return Arrays.asList("开启减肥打卡统计功能");
     }
 
     @Override

@@ -1,0 +1,67 @@
+package com.tencent.wxcloudrun.strategy.command;
+
+import com.alibaba.fastjson.JSONObject;
+import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.dto.LoginInfo;
+import com.tencent.wxcloudrun.model.Member;
+import com.tencent.wxcloudrun.util.RegexUtils;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * 新人入群帮助
+ *
+ * @Author：zhoutao
+ * @Date：2023/3/13 16:52
+ */
+public class JoinGroupHelpCmd implements Command<String> {
+
+    @Override
+    public boolean isMatch(String inputCmd) {
+        return RegexUtils.hasMatchParts(inputCmd, commandReg());
+    }
+
+    @Override
+    public ApiResponse<JSONObject> extractData(String inputCmd) {
+        return ApiResponse.ok();
+    }
+
+    @Override
+    public ApiResponse execute(String commandRequest, JSONObject cmdData, LoginInfo loginInfo) {
+        return ApiResponse.ok();
+    }
+
+    @Override
+    public String resultFormat(JSONObject data, LoginInfo loginInfo) {
+        return new StringBuilder("欢迎加入，以下是打卡帮助：\n" +
+                "Step1： 输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，进行原始和目标体重信息设置\n" +
+                "Step2：请按打卡模版进行打卡，勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔，没有请输入“无”，或删除行\n" +
+                "今日体重：138斤\n" +
+                "运动：走路5000步，力量训练60分钟\n" +
+                "早餐：豆浆，包子，全麦面包\n" +
+                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "晚餐：咖喱鸡肉饭\n" +
+                "加餐：无").toString();
+    }
+
+    @Override
+    public String commandName() {
+        return "新人入群帮助";
+    }
+
+    @Override
+    public String commandReg() {
+        return "新人入群帮助";
+    }
+
+    @Override
+    public List<String> examples() {
+        return Arrays.asList("新人入群帮助");
+    }
+
+    @Override
+    public List<Integer> authUserTypes() {
+        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN);
+    }
+}

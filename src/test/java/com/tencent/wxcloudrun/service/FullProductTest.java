@@ -1,8 +1,6 @@
 package com.tencent.wxcloudrun.service;
 
-import com.tencent.wxcloudrun.controller.CommandControllerNew;
-import com.tencent.wxcloudrun.strategy.command.OriginWeightCmd;
-import com.tencent.wxcloudrun.util.RegexUtils;
+import com.tencent.wxcloudrun.controller.CommandController;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +14,7 @@ import javax.annotation.Resource;
 public class FullProductTest {
 
     @Resource
-    CommandControllerNew commandController;
+    CommandController commandController;
 
     @Resource
     PunchCardService punchCardService;
@@ -46,7 +44,7 @@ public class FullProductTest {
 //                "加餐：无"));
 
         System.out.println(punchCardService.getRecords(3l,"zztjay","20230301"));
-//        System.out.println(commandController.command("创建减脂营"));
+//        System.out.println(commandController.command("开启减肥打卡统计功能"));
 //
 //        System.out.println(commandController.command("加入减脂营"));
 //

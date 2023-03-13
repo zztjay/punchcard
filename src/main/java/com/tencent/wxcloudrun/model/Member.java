@@ -23,6 +23,8 @@ public class Member implements Serializable {
     public static final Integer ROLE_TYPE_CREATER = 1 ;
     public static final Integer ROLE_TYPE_NO_JOIN = 0;
 
+    public static final Integer ROLE_TYPE_SYSTEM = -1;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 唯一id

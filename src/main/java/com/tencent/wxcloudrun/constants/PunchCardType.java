@@ -37,7 +37,7 @@ public enum PunchCardType {
 
 
     /******************团队相关命令************************/
-//    create_camp("创建减脂营", "创建减脂营", Arrays.asList("创建减脂营")
+//    create_camp("开启减肥打卡统计功能", "开启减肥打卡统计功能", Arrays.asList("开启减肥打卡统计功能")
 //            , Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER)),
 //
 //    close_camp("关闭减脂营", "关闭减脂营", Arrays.asList("关闭减脂营"),

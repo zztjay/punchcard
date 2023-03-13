@@ -71,7 +71,7 @@ public class CampService {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         Camp groupCamp = getCampByGid(groupId);
         if (null == groupCamp) {
-            return ApiResponse.error("GROUP_NO_CAMP", "本群还未创建减脂营，请管理员创建");
+            return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启减肥打卡统计功能，请管理员创建");
         }
         boolean isJoin = membersMapper.selectByWxId(wxId, groupCamp.getId()) != null;
         if (isJoin) {
