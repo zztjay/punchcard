@@ -41,8 +41,6 @@ public class PunchCardCmdModel implements Command<String> {
     @Resource
     MembersMapper membersMapper;
 
-    List<String> PUNCH_CARD_KEY_WORDS = Arrays.asList("打卡", "减肥打卡", "运动打卡", "健身打卡", "食物打卡");
-
     @Override
     public boolean isMatch(String inputCmd) {
         // 如果命中了打卡类型的正则，则确定是打卡
@@ -220,7 +218,6 @@ public class PunchCardCmdModel implements Command<String> {
 
     @Override
     public List<Integer> authUserTypes() {
-        // todo 要删除
         return Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER);
     }
 

@@ -1,17 +1,12 @@
 package com.tencent.wxcloudrun.service;
 
-import com.tencent.wxcloudrun.common.LoginContext;
-import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.controller.CommandControllerNew;
-import com.tencent.wxcloudrun.strategy.punchcard.AbstractWeightCmd;
-import com.tencent.wxcloudrun.strategy.punchcard.OriginWeightCmd;
+import com.tencent.wxcloudrun.strategy.command.OriginWeightCmd;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-
-import static com.tencent.wxcloudrun.constants.CmdRegexConstant.normalContentRegex;
 
 /**
  * @Author：zhoutao
@@ -78,17 +73,6 @@ public class FullProductTest {
     }
 
     public static void main(String[] args) {
-        System.out.println(RegexUtils.getMatches(new OriginWeightCmd().cmdReg(),"🦅3.1日\n" + "原始：158斤，\n" +
-                "目标体重：110斤🦅\n" +
-                "今日体重：138斤🦅\n" +
-                "比昨天瘦：0.1斤🦅\n" +
-                "运动：无\n" +
-                "早餐：豆浆，包子，全麦面包 🦅 \n" +
-                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
-                "晚餐：咖喱鸡肉饭\n" +
-                "加餐：无"));
-
-        System.out.println(new OriginWeightCmd().cmdReg());
     }
 
 }
