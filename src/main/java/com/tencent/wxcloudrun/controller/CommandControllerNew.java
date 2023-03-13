@@ -75,7 +75,7 @@ public class CommandControllerNew {
                     }
 
                     // 构建返回数据
-                    return ApiResponse.ok(commandModel.resultFormat(extractResult.getData()));
+                    return ApiResponse.ok(commandModel.resultFormat(extractResult.getData(),LoginContext.getLoginInfo()));
                 }
             }
         }

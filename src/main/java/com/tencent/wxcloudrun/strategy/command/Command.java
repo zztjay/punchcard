@@ -23,7 +23,7 @@ public interface Command<T> {
 
     ApiResponse execute(String commandRequest, JSONObject cmdData,  LoginInfo loginInfo); // 执行命令
 
-    T resultFormat(JSONObject data);
+    T resultFormat(JSONObject data, LoginInfo loginInfo);
 
     String commandName(); // 命令名称
 

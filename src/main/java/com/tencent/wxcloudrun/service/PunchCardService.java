@@ -70,19 +70,26 @@ public class PunchCardService {
      *
      * @return API response json
      */
-    public ApiResponse punchcard(String content,
+    public ApiResponse punchcard(String content, String quantity,
                                  String punchCardTime, Long campId, String wxId, int type) {
         Record record = getRecord(campId, wxId, punchCardTime, type);
         if (null == record) {
             record = new Record();
-            record.setContent(content);
-            record.setType(type);
-            record.setPunchCardTime(punchCardTime);
-            record.setMemberWxId(wxId);
-            record.setCampId(campId);
+        }
+        record.setContent(content);
+        record.setType(type);
+        record.setPunchCardTime(punchCardTime);
+        record.setMemberWxId(wxId);
+        record.setCampId(campId);
+        record.setQuantity(quantity);
+        save(record);
+        return ApiResponse.ok(record.getId());
+    }
+
+    public ApiResponse save(Record record) {
+        if (record.getId() == null ) {
             punchCardMapper.insert(record);
         } else {
-            record.setContent(content);
             record.setUpdatedAt(LocalDateTime.now());
             punchCardMapper.updateByPrimaryKeySelective(record);
         }
@@ -132,6 +139,19 @@ public class PunchCardService {
        query.setCampId(campId);
        query.setWxId(wxId);
        return punchCardMapper.count(query);
+    }
+
+    /**
+     * 查询训练营打卡
+     *
+     * @return API response json
+     */
+    public int count(String wxId, Long campId, Integer type) {
+        PunchCardQuery query = new PunchCardQuery();
+        query.setType(type);
+        query.setCampId(campId);
+        query.setWxId(wxId);
+        return punchCardMapper.count(query);
     }
 //
 //    public

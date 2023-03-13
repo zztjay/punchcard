@@ -42,11 +42,9 @@ public class CreateCampCmd implements Command<String> {
     }
 
     @Override
-    public String resultFormat(JSONObject data) {
+    public String resultFormat(JSONObject data, LoginInfo loginInfo) {
         return null;
     }
-
-
 
     @Override
     public String commandName() {

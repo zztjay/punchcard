@@ -63,7 +63,7 @@ public abstract class AbstractFoodCmd implements PunchCardCmd {
         foodContents.put(type(), data.getJSONArray("foods"));
 
         // 执行打卡
-        punchCardService.punchcard(foodContents.toJSONString(),date,loginInfo.getCampId(),
+        punchCardService.punchcard(foodContents.toJSONString(),null, date,loginInfo.getCampId(),
                 loginInfo.getWxId(),Record.PUNCHCARD_TYPE_FOOD);
         return ApiResponse.ok();
     }

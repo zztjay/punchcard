@@ -33,4 +33,6 @@ public class Member implements Serializable {
     private String memberOpenId; // 用户的openId，机器人以openId为准
     private String memberName; // 用户减脂营的名称（在群里，以群名称为主）
     private Integer roleType; // 用户角色,1: 成员，2:管理员
+    private String goalWeight; // 目标体重
+    private String originWeight; // 初始体重
 }

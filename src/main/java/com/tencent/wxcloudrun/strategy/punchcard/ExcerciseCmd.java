@@ -52,7 +52,7 @@ public class ExcerciseCmd implements PunchCardCmd {
     public ApiResponse execute(String date, String commandRequest, JSONObject data, LoginInfo loginInfo) {
         JSONArray exerciseDatas = data.getJSONArray("exerciseDatas");
         if( exerciseDatas != null &&  exerciseDatas.size() > 0) {
-            return punchCardService.punchcard(exerciseDatas.toJSONString(), date, loginInfo.getCampId(),
+            return punchCardService.punchcard(exerciseDatas.toJSONString(), null, date, loginInfo.getCampId(),
                     loginInfo.getWxId(), Record.PUNCHCARD_TYPE_SPORTS);
         }
         return ApiResponse.ok();
