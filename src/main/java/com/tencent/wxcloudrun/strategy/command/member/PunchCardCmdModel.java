@@ -145,7 +145,7 @@ public class PunchCardCmdModel implements Command<String> {
         
         Date punchcardDate = DateUtil.getStrToDate(DateUtil.DATE_FORMAT_PATTERN, data.getString("punchcardDate"));
         if(punchcardDate.before(DateTime.now().withTimeAtStartOfDay().toDate())){
-            return new StringBuilder("补卡成功！").toString();
+            return  new StringBuilder(DateUtil.getDate2Str("MM.dd",punchcardDate)).append("补卡成功！").toString();
         }
 
         // 累计打卡天数，累计减重xx斤，继续要加油
