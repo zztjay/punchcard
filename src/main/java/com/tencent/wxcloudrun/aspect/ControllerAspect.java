@@ -69,11 +69,18 @@ public class ControllerAspect {
 
         // 设置登陆态
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setGroupName(UriEncoder.decode(request.getHeader(CommonConstants.GROUP_NAME)));
+        if(StringUtils.isNotEmpty(request.getHeader(CommonConstants.GROUP_NAME))) { // 群名称
+            loginInfo.setGroupName(UriEncoder.decode(request.getHeader(CommonConstants.GROUP_NAME)));
+        }
+        if(StringUtils.isNotEmpty(request.getHeader(CommonConstants.USER_WX_NAME))) { // 微信名称
+            loginInfo.setWxName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_NAME)));
+        }
+        if(StringUtils.isNotEmpty(request.getHeader(CommonConstants.USER_WX_GROUP_NAME))) { // // 群用户名称
+            loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
+        }
         loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
         loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-        loginInfo.setWxName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_NAME)));
-        loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
+
 
         // 设置登陆态
 //        LoginInfo loginInfo = new LoginInfo();
