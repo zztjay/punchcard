@@ -12,6 +12,9 @@ import lombok.Data;
 public class CampQuery extends QueryBase {
     private String groupId; // 群id
 
+    private Integer deleted; // 群id
+
+
     public CampQuery(String groupId) {
         this.groupId = groupId;
     }

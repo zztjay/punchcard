@@ -78,7 +78,7 @@ public class ControllerAspect {
         // 减脂营场景，设置减脂营信息
         if(StringUtils.isNotEmpty(loginInfo.getGroupId()) && StringUtils.isNotEmpty(loginInfo.getWxId())){
             Camp camp = campService.getCampByGid(loginInfo.getGroupId());
-            if(null != camp) {
+            if(null != camp && camp.getDeleted() == Camp.OPEN) {
                 loginInfo.setCampId(camp.getId());
                 //  静默用户加入减脂营
                 ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId(),loginInfo.getWxId());

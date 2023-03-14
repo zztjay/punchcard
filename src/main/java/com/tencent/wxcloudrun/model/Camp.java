@@ -22,6 +22,11 @@ public class Camp implements Serializable {
     public static final int PUNCHCARD_TYPE_LOSE_WEIGHT = 1;
     public static final int PUNCHCARD_TYPE_EXERCISE = 2;
 
+
+    public static final int OPEN = 0;
+    public static final int CLOSE = 1;
+
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

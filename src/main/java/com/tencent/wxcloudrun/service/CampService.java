@@ -65,7 +65,7 @@ public class CampService {
     public ApiResponse isUserJoinCamp(String groupId, String wxId) {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         Camp groupCamp = getCampByGid(groupId);
-        if (null == groupCamp) {
+        if (null == groupCamp || ( groupCamp!=null && groupCamp.getDeleted() == Camp.CLOSE)) {
             return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启打卡统计功能，请管理员创建");
         }
         boolean isJoin = membersMapper.selectByWxId(wxId, groupCamp.getId()) != null;

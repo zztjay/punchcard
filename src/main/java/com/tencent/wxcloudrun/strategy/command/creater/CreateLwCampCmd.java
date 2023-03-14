@@ -41,12 +41,16 @@ public class CreateLwCampCmd implements Command<String> {
 
     @Override
     public ApiResponse execute(String commandRequest, JSONObject cmdData, LoginInfo loginInfo) {
-        Camp camp = new Camp();
+        Camp camp = campService.getCampByGid(loginInfo.getGroupId());
+        if(null == camp){
+            camp = new Camp();
+        }
         camp.setCampName(loginInfo.getGroupName());
         camp.setGroupId(loginInfo.getGroupId());
         camp.setCreaterWxId(loginInfo.getWxId());
         camp.setCreaterName(loginInfo.getWxGroupName());
         camp.setType(Camp.PUNCHCARD_TYPE_LOSE_WEIGHT);
+        camp.setDeleted(Camp.OPEN);
         return campService.save(camp);
     }
 
@@ -88,7 +92,7 @@ public class CreateLwCampCmd implements Command<String> {
     public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
         // 检查群里是否重复创建
         Camp camp = campService.getCampByGid(loginInfo.getGroupId());
-        if (camp != null) {
+        if (camp != null && camp.getDeleted() == Camp.OPEN) {
             return ApiResponse.error("CAMP_REPEATED_CREAT", "打卡统计功能已开启");
         }
         return ApiResponse.ok();
