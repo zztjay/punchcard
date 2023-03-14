@@ -45,7 +45,7 @@ public class CommandController {
 
         // 匹配命令
         if (StringUtils.isNotEmpty(inputCmd)) {
-            StringBuilder responseText = new StringBuilder();
+
             for (Command commandModel : commandModels) {
                 if (commandModel.isMatch(inputCmd)) {
 
@@ -74,11 +74,10 @@ public class CommandController {
                         return executeResult;
                     }
 
-                    // 构建返回数据
-                    responseText.append(commandModel.resultFormat(extractResult.getData(),LoginContext.getLoginInfo()));
+                    // 构建返回数据，返回第一个识别的命令
+                    return ApiResponse.ok(commandModel.resultFormat(extractResult.getData(),LoginContext.getLoginInfo()));
                 }
             }
-            return ApiResponse.ok(responseText.toString());
         }
 
         return ApiResponse.error("COMMAND_NOT_FOUND", "无法识别您的输入，请检查文本格式!");

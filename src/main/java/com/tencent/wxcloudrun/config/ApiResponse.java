@@ -12,6 +12,12 @@ public final class ApiResponse<T> {
   private String errorMsg;
   private T data;
 
+
+  public boolean isFail(){
+    return !isSuccess();
+  }
+
+
   public boolean isSuccess(){
     return code.equals(CommonConstants.SUCCESS);
   }

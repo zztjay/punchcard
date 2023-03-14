@@ -68,39 +68,37 @@ public class ControllerAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 设置登陆态
-//        LoginInfo loginInfo = new LoginInfo();
-//        loginInfo.setGroupName(UriEncoder.decode(request.getHeader(CommonConstants.GROUP_NAME)));
-//        loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
-//        loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
-//        loginInfo.setWxName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_NAME)));
-//        loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
-
         LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setGroupName("周末减脂小分队");
-        loginInfo.setWxId("zztjay");
-        loginInfo.setWxName("韬（微信名称）");
-        loginInfo.setWxGroupName("韬合（微信群名称）");
-        loginInfo.setGroupId("43575898011@chatroom");
+        loginInfo.setGroupName(UriEncoder.decode(request.getHeader(CommonConstants.GROUP_NAME)));
+        loginInfo.setGroupId(request.getHeader(CommonConstants.GROUP_ID));
+        loginInfo.setWxId(request.getHeader(CommonConstants.WX_ID));
+        loginInfo.setWxName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_NAME)));
+        loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
 
-        // 设置减脂营信息
-        Camp camp = campService.getCampByGid(loginInfo.getGroupId());
-        if(null != camp) {
-            loginInfo.setCampId(camp.getId());
+        // 减脂营场景，设置减脂营信息
+        if(StringUtils.isNotEmpty(loginInfo.getGroupId())){
+            Camp camp = campService.getCampByGid(loginInfo.getGroupId());
+            if(null != camp) {
+                loginInfo.setCampId(camp.getId());
 
-            //  静默用户加入减脂营
-            ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId(),loginInfo.getWxId());
-            if(apiResponse.getCode().equals("USER_NOT_JOIN_CAMP") ){
-                campService.joinCamp(loginInfo.getCampId(),loginInfo.getWxName(),loginInfo.getWxId());
+                //  静默用户加入减脂营
+                ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId(),loginInfo.getWxId());
+                if(apiResponse.getCode().equals("USER_NOT_JOIN_CAMP") ){
+                    campService.joinCamp(loginInfo.getCampId(),loginInfo.getWxName(),loginInfo.getWxId());
+                }
             }
         }
 
-        //  静默用户注册
-        if(!userService.isUserRegister(loginInfo.getWxId())){
-            User user = new User();
-            user.setMemberName(loginInfo.getWxGroupName());
-            user.setMemberWxNick(loginInfo.getWxName());
-            user.setMemberWxId(loginInfo.getWxId());
-            userService.save(user);
+        if(StringUtils.isNotEmpty(loginInfo.getWxId())) {
+
+            //  静默用户注册
+            if (!userService.isUserRegister(loginInfo.getWxId())) {
+                User user = new User();
+                user.setMemberName(loginInfo.getWxGroupName());
+                user.setMemberWxNick(loginInfo.getWxName());
+                user.setMemberWxId(loginInfo.getWxId());
+                userService.save(user);
+            }
         }
 
         LoginContext.createLoginContext(loginInfo);

@@ -77,8 +77,8 @@ public class CreateLwCampCmd implements Command<String> {
 
 
     @Override
-    public List<String> examples() {
-        return Arrays.asList("开启打卡统计");
+    public String examples() {
+        return "开启打卡统计";
     }
 
     @Override

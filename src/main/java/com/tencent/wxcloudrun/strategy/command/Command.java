@@ -29,7 +29,7 @@ public interface Command<T> {
 
     String commandReg(); // 命令正则匹配
 
-    List<String> examples(); // 命令示例
+    String examples(); // 命令示例
 
     List<Integer> authUserTypes(); // 授权用户类型
 

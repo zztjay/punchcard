@@ -60,8 +60,8 @@ public class JoinGroupHelpCmd implements Command<String> {
     }
 
     @Override
-    public List<String> examples() {
-        return Arrays.asList("新人入群帮助");
+    public String examples() {
+        return "新人入群帮助";
     }
 
     @Override

@@ -40,27 +40,27 @@ public class BeFriendHelpCmd implements Command<String> {
         return new StringBuilder("很高兴认识您，我是打卡小助手，以下是step by step帮助：\n" +
                 "  Step1:  把“打卡小助手”加入减肥群\n" +
                 "  Step2:  群内输入“开启打卡统计功能”，并@打卡小助手\n" +
-                "  Step3:  群内输入“导出excel打卡统计（3.1～3.30）”命令，并@打卡小助手，打卡小助手会私聊发送excel给您，日期支持“近7天、近30天、上一周、上个月、自定义日期区间”\n" +
-                "  Step4:  如需其他统计功能，请输入“查询所有统计命令”，并@打卡小助手").toString();
+                "  Step3:  群内输入“导出excel打卡统计（3.1～3.30）”命令，并@打卡小助手，打卡小助手会私聊发送excel给您，" +
+                "日期支持“近7天、近30天、上一周、上个月、自定义日期区间”\n").toString();
     }
 
     @Override
     public String commandName() {
-        return "加好友帮助";
+        return "新朋友帮助";
     }
 
     @Override
     public String commandReg() {
-        return "加好友帮助";
+        return "新朋友帮助";
     }
 
     @Override
-    public List<String> examples() {
-        return Arrays.asList("加好友帮助");
+    public String examples() {
+        return "新朋友帮助";
     }
 
     @Override
     public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL);
+        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL,Member.ROLE_TYPE_CREATER);
     }
 }

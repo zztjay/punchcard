@@ -58,8 +58,10 @@ public class FullProductTest {
 //                "晚餐：咖喱鸡肉饭\n" +
 //                "加餐：无"));
 
-//        System.out.println(commandController.command("开启打卡统计"));
-        System.out.println(commandController.command("关闭打卡统计"));
+        System.out.println(commandController.command("开启打卡统计"));
+        System.out.println(commandController.command("新朋友帮助"));
+        System.out.println(commandController.command("我的原始体重为 120斤\n，" +
+                "我的目标体重为 100斤"));
 
 
 //        System.out.println(punchCardService.getRecords(3l,"zztjay","20230301"));

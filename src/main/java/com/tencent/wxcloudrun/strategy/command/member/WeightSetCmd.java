@@ -8,6 +8,9 @@ import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import tk.mybatis.mapper.util.StringUtil;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -35,50 +38,94 @@ public class WeightSetCmd implements Command<String> {
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
         JSONObject data = new JSONObject();
-        List<String> matcheCmds = RegexUtils.getMatches(heightNumRegex, inputCmd);
-        if(matcheCmds.size() > 1){
+        List<String> originCmds = RegexUtils.getMatches(originRegx(), inputCmd);
+        List<String> goalCmds = RegexUtils.getMatches(goalRegx(), inputCmd);
+        if (originCmds.size() > 1 || goalCmds.size() > 1) {
             return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT_CMD", "格式有误，请检查！\n" +
-                    "参考示例：\"" + examples().get(0) + "\"");
+                    "参考示例：\"" + examples() + "\"");
         }
 
-        // 提取数据
-        List<String> matcheDatas = RegexUtils.getMatches(heightNumRegex, matcheCmds.get(0));
-        if (matcheDatas.size() == 0) {
-            return ApiResponse.error("EXTRACT_NO_WEIGHT", "格式有误，请检查！\n" +
-                    "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matcheDatas.size() > 1) {
-            return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT", "格式有误，请检查！\n" +
-                    "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matcheDatas.size() == 1) {
-            data.put("weight", matcheDatas.get(0));
+        // 提取体重数据
+        if (originCmds.size() > 0) {
+            ApiResponse result = extractWeight(heightNumRegex, originCmds.get(0));
+            if (result.isFail()) {
+                return result;
+            }
+            data.put("origin", result.getData());
         }
+        if (goalCmds.size() > 0) {
+            ApiResponse result = extractWeight(heightNumRegex, goalCmds.get(0));
+            if (result.isFail()) {
+                return result;
+            }
+            data.put("goal", result.getData());
+        }
+
         return ApiResponse.ok(data);
+    }
+
+    private ApiResponse<String> extractWeight(String regex, String cmd) {
+        List<String> weights = RegexUtils.getMatches(regex, cmd);
+        if (weights.size() == 0 || CollectionUtils.isEmpty(weights)) {
+            return ApiResponse.error("EXTRACT_NO_WEIGHT", "格式有误，请检查！\n" +
+                    "参考示例：\"" + examples() + "\"");
+        } else if (weights.size() > 1) {
+            return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT", "格式有误，请检查！\n" +
+                    "参考示例：\"" + examples() + "\"");
+        }
+        return ApiResponse.ok(weights.get(0));
     }
 
     @Override
     public ApiResponse execute(String commandRequest, JSONObject cmdData, LoginInfo loginInfo) {
-        memberService.updateGoalWeight(loginInfo.getWxId(), loginInfo.getCampId(), cmdData.getString("weight"));
+        if (StringUtil.isNotEmpty(cmdData.getString("goal"))) { // 目标体重
+            memberService.updateGoalWeight(loginInfo.getWxId(), loginInfo.getCampId(), cmdData.getString("goal"));
+        }
+        if (StringUtil.isNotEmpty(cmdData.getString("origin"))) { // 原始体重
+            memberService.updateOriginWeight(loginInfo.getWxId(), loginInfo.getCampId(), cmdData.getString("origin"));
+        }
         return ApiResponse.ok();
     }
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
-        return "设置成功，您的目标体重为" + data.getString("weight") + "斤!\n";
+        StringBuilder result = new StringBuilder("设置成功");
+        if (StringUtil.isNotEmpty(data.getString("origin"))) {
+            result.append("，您的原始体重为").append(data.getString("origin")).append("斤");
+        }
+        if (StringUtil.isNotEmpty(data.getString("goal"))) {
+            result.append("，您的目标体重为").append(data.getString("goal")).append("斤");
+        }
+        result.append("\n");
+        return result.toString();
     }
 
     @Override
     public String commandName() {
-        return "我的目标体重";
+        return "体重设置";
     }
 
     @Override
     public String commandReg() {
+        return RegexUtils.or(goalRegx(), originRegx()).toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(RegexUtils.getMatches(new WeightSetCmd().commandReg(), "我的原始体重为 120斤\n" +
+                "我的目标体重为 100斤"));
+    }
+
+    private String goalRegx() {
         return "(我的)?目标体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
     }
 
+    private String originRegx() {
+        return "(我的)?原[始]?体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
+    }
+
     @Override
-    public List<String> examples() {
-        return Arrays.asList("我的目标体重为110斤");
+    public String examples() {
+        return new StringBuilder("我的目标体重为100斤").append("\n").append("我的原体重为120斤").toString();
     }
 
     @Override

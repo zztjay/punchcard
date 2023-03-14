@@ -211,13 +211,13 @@ public class PunchCardCmdModel implements Command<String> {
     }
 
     @Override
-    public List<String> examples() {
-        return Arrays.asList("原始体重：158斤\n" +
-                "目标体重：110斤\n" +
-                "今日体重：138斤\n" +
-                "比昨天瘦：0.1斤\n" +
-                "运动：走路5000步，力量训练60分钟\n" +
-                "饮食控制：轻断食16+8，戒油腻");
+    public String examples() {
+        return new StringBuilder("\uD83D\uDC49今日体重：138斤\n" +
+                "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +
+                "\uD83C\uDF5E早餐：豆浆，包子，全麦面包\n" +
+                "\uD83C\uDF5A午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "\uD83C\uDF75晚餐：咖喱鸡肉饭\n" +
+                "\uD83C\uDF49加餐：无").toString();
     }
 
 
