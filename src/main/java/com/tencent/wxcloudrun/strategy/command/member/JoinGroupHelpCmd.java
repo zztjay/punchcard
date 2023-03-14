@@ -21,6 +21,7 @@ import java.util.List;
  */
 @Component
 public class JoinGroupHelpCmd implements Command<String> {
+
     @Resource
     CampService campService;
 
