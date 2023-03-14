@@ -56,7 +56,7 @@ public class CommandController {
                     }
 
                     // 一开始还没有减脂营，需要开启
-                    if (commandModel.getClass() == CreateLwCampCmd.class && LoginContext.getCampId() == null) {
+                    if (commandModel.getClass() != CreateLwCampCmd.class && LoginContext.getCampId() == null) {
                         return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启打卡统计功能");
                     }
 

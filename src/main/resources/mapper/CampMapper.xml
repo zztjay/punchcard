@@ -13,6 +13,7 @@
         <if test="groupId != null ">
             and groupId = #{groupId}
         </if>
+        and deleted = 0
         order by createdAt desc
         <if test="startRow != null and pageSize != null">
             LIMIT #{startRow}, #{pageSize}
@@ -30,6 +31,7 @@
         <if test="groupId != null ">
           and groupId = #{groupId}
         </if>
+        and deleted = 0
     </select>
 
 </mapper>

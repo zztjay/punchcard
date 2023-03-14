@@ -30,11 +30,11 @@ public class Camp implements Serializable {
     private LocalDateTime updatedAt;// 修改时间
     private String  campName; // 训练营名称
     private String groupId; // 归属群id
-    private int type = PUNCHCARD_TYPE_LOSE_WEIGHT; // 1: 减肥，2: 运动健身
+    private Integer type = PUNCHCARD_TYPE_LOSE_WEIGHT; // 1: 减肥，2: 运动健身
     private String  createrName; // 活动创建者名称
     private String  createrWxId; // 活动创建者的wxId
     private String  createrOpenId; // 活动创建者的openId
     private String  ext;// 扩展字段
     @LogicDelete(notDeletedValue = 0, isDeletedValue = 1)
-    private int deleted; // 是否删除，0：开启，1：关闭（逻辑删除）
+    private Integer deleted = 0; // 是否删除，0：开启，1：关闭（逻辑删除）
 }
