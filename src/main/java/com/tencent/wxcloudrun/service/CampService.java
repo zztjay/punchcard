@@ -41,7 +41,7 @@ public class CampService {
 
         // 是否为创建者角色
         Camp camp = getCampById(campId);
-        if(null != camp && camp.getCreaterWxId().equals(wxId)){
+        if (null != camp && camp.getCreaterWxId().equals(wxId)) {
             return Member.ROLE_TYPE_CREATER;
         }
         // 其他角色
@@ -59,6 +59,14 @@ public class CampService {
             campMapper.insert(camp);
         }
         return ApiResponse.ok(camp.getId());
+    }
+
+    public void closeCamp(Long campId) {
+        Camp camp = getCampById(campId);
+        if(camp != null){
+            camp.setDeleted(Camp.CLOSE);
+            save(camp);
+        }
     }
 
 
@@ -85,9 +93,9 @@ public class CampService {
         return null;
     }
 
-    public Camp getOpenCampByGid(String groupId){
+    public Camp getOpenCampByGid(String groupId) {
         Camp camp = getCampByGid(groupId);
-        if(camp!=null && camp.getDeleted() == Camp.OPEN){
+        if (camp != null && camp.getDeleted() == Camp.OPEN) {
             return camp;
         }
         return null;
@@ -95,6 +103,7 @@ public class CampService {
 
 
     public Camp getCampById(Long campId) {
+
         return campMapper.selectByPrimaryKey(campId);
     }
 
@@ -113,7 +122,7 @@ public class CampService {
         member.setMemberName(memberName);
         member.setMemberWxId(wxId);
         // 是否为创建者角色
-        if(null != camp && camp.getCreaterWxId().equals(wxId)){
+        if (null != camp && camp.getCreaterWxId().equals(wxId)) {
             member.setRoleType(Member.ROLE_TYPE_CREATER);
         } else {
             member.setRoleType(Member.ROLE_TYPE_NORMAL);

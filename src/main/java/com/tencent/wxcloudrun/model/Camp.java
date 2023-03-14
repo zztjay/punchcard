@@ -40,6 +40,5 @@ public class Camp implements Serializable {
     private String  createrWxId; // 活动创建者的wxId
     private String  createrOpenId; // 活动创建者的openId
     private String  ext;// 扩展字段
-    @LogicDelete(notDeletedValue = 0, isDeletedValue = 1)
     private Integer deleted = 0; // 是否删除，0：开启，1：关闭（逻辑删除）
 }

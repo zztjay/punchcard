@@ -1,6 +1,9 @@
 package com.tencent.wxcloudrun.service;
 
 import com.tencent.wxcloudrun.controller.CommandController;
+import com.tencent.wxcloudrun.dao.CampMapper;
+import com.tencent.wxcloudrun.dao.MembersMapper;
+import com.tencent.wxcloudrun.model.Camp;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +22,15 @@ public class FullProductTest {
     @Resource
     PunchCardService punchCardService;
 
+    @Resource
+    CampService campService;
+
+    @Resource
+    CampMapper campMapper;
+
+    @Resource
+    MembersMapper membersMapper;
+
     @Test
     public void test() {
 
@@ -33,8 +45,9 @@ public class FullProductTest {
 //
 //        System.out.println(commandController.command("新人入群帮助"));
 //
-//        System.out.println(commandController.command("开启打卡统计功能"));
-//
+        System.out.println(commandController.command("开启打卡统计"));
+
+//        Camp camp = campService.getCampById(8l);
 //        System.out.println(commandController.command("我的原始体重为150斤"));
 //        System.out.println(commandController.command("我的目标体重为110斤"));
 //

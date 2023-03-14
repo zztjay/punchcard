@@ -41,7 +41,7 @@ public class CloseLwCampCmd implements Command<String> {
 
     @Override
     public ApiResponse execute(String commandRequest, JSONObject cmdData, LoginInfo loginInfo) {
-        campMapper.deleteByPrimaryKey(loginInfo.getCampId());
+        campService.closeCamp(loginInfo.getCampId());
         return ApiResponse.ok();
     }
 
