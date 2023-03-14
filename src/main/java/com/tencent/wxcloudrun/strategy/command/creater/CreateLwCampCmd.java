@@ -91,8 +91,8 @@ public class CreateLwCampCmd implements Command<String> {
     @Override
     public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
         // 检查群里是否重复创建
-        Camp camp = campService.getCampByGid(loginInfo.getGroupId());
-        if (camp != null && camp.getDeleted() == Camp.OPEN) {
+        Camp camp = campService.getOpenCampByGid(loginInfo.getGroupId());
+        if (camp != null) {
             return ApiResponse.error("CAMP_REPEATED_CREAT", "打卡统计功能已开启");
         }
         return ApiResponse.ok();

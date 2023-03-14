@@ -16,7 +16,6 @@
         <if test="deleted != null ">
             and deleted = #{deleted}
         </if>
-
         order by createdAt desc
         <if test="startRow != null and pageSize != null">
             LIMIT #{startRow}, #{pageSize}
