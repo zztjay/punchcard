@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
+import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
@@ -29,6 +30,10 @@ public class WeightSetCmd implements Command<String> {
     public static final String heightNumRegex = "((([1-9][0-9]{1,3})(\\.\\d{1,2})?)|([0-9](\\.\\d{1,2})?))"; // 验证体重的数字
     @Resource
     MemberService memberService;
+
+    @Resource
+    CampService campService;
+
 
     @Override
     public boolean isMatch(String inputCmd) {
@@ -129,7 +134,10 @@ public class WeightSetCmd implements Command<String> {
     }
 
     @Override
-    public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER);
+    public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
+        if(loginInfo.getCampId() == null){
+            return ApiResponse.error("CAMP_NOT_CREAT", "打卡统计功能未开启，请联系管理员开启！");
+        }
+        return ApiResponse.ok();
     }
 }

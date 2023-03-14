@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.strategy.command.creater;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 
+import com.tencent.wxcloudrun.dto.CampQuery;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Camp;
 import com.tencent.wxcloudrun.model.Member;
@@ -10,6 +11,7 @@ import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -26,9 +28,10 @@ public class CreateLwCampCmd implements Command<String> {
     @Resource
     CampService campService;
 
+
     @Override
     public boolean isMatch(String inputCmd) {
-       return RegexUtils.hasMatchParts(inputCmd, commandReg());
+        return RegexUtils.hasMatchParts(inputCmd, commandReg());
     }
 
     @Override
@@ -62,7 +65,7 @@ public class CreateLwCampCmd implements Command<String> {
     }
 
     public static void main(String[] args) {
-        System.out.println(new CreateLwCampCmd().resultFormat(null,null));
+        System.out.println(new CreateLwCampCmd().resultFormat(null, null));
     }
 
     @Override
@@ -82,7 +85,13 @@ public class CreateLwCampCmd implements Command<String> {
     }
 
     @Override
-    public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER);
+    public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
+        // 检查群里是否重复创建
+        Camp camp = campService.getCampByGid(loginInfo.getGroupId());
+        if (camp != null) {
+            return ApiResponse.error("CAMP_REPEATED_CREAT", "打卡统计功能已开启");
+        }
+        return ApiResponse.ok();
     }
+
 }

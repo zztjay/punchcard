@@ -60,7 +60,7 @@ public class BeFriendHelpCmd implements Command<String> {
     }
 
     @Override
-    public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN,Member.ROLE_TYPE_NORMAL,Member.ROLE_TYPE_CREATER);
+    public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
+        return ApiResponse.ok();
     }
 }

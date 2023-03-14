@@ -55,17 +55,10 @@ public class CommandController {
                         return extractResult;
                     }
 
-                    // 一开始还没有减脂营，需要开启
-                    if (commandModel.getClass() != CreateLwCampCmd.class && LoginContext.getCampId() == null) {
-                        return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启打卡统计功能");
-                    }
-
-                    // 检查命令权限
-                    Integer roleType = campService.getRoleType(LoginContext.getCampId(), LoginContext.getWxId());
-                    List<Integer> authTypes = commandModel.authUserTypes();
-                    if (!authTypes.contains(roleType)) {
-                        return ApiResponse.error("NO_PERMISSION_EXCUTE", "您没有权限执行" +
-                                commandModel.commandName() + "命令！");
+                    // 检查命令用户权限
+                   ApiResponse<String> roleCheckResult = commandModel.roleCheck(LoginContext.getLoginInfo());
+                    if(roleCheckResult.isFail()){
+                        return roleCheckResult;
                     }
 
                     // 执行命令
@@ -80,6 +73,6 @@ public class CommandController {
             }
         }
 
-        return ApiResponse.error("COMMAND_NOT_FOUND", "无法识别您的输入，请检查文本格式!");
+        return ApiResponse.error("COMMAND_NOT_FOUND", "无法识别您的输入！");
     }
 }

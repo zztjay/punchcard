@@ -53,11 +53,6 @@ public class CampService {
     }
 
     public ApiResponse save(Camp camp) {
-        // 检查群里是否重复创建
-        List<Camp> activities = campMapper.query(new CampQuery(camp.getGroupId()));
-        if (!CollectionUtils.isEmpty(activities)) {
-            return ApiResponse.error("CAMP_REPEATED_CREAT", "打卡统计功能已开启");
-        }
         if (camp.getId() != null && camp.getId() > 0L) {
             campMapper.updateByPrimaryKey(camp);
         } else {

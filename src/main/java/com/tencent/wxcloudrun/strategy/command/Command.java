@@ -31,7 +31,7 @@ public interface Command<T> {
 
     String examples(); // 命令示例
 
-    List<Integer> authUserTypes(); // 授权用户类型
+    ApiResponse<String> roleCheck(LoginInfo loginInfo); // 用户权限检查
 
 
 }

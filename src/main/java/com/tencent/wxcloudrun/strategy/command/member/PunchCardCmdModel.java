@@ -220,10 +220,11 @@ public class PunchCardCmdModel implements Command<String> {
                 "\uD83C\uDF49加餐：无").toString();
     }
 
-
     @Override
-    public List<Integer> authUserTypes() {
-        return Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER);
+    public ApiResponse<String> roleCheck(LoginInfo loginInfo) {
+        if(loginInfo.getCampId() == null){
+            return ApiResponse.error("CAMP_NOT_CREAT", "打卡统计功能未开启，请联系管理员开启！");
+        }
+        return ApiResponse.ok();
     }
-
 }
