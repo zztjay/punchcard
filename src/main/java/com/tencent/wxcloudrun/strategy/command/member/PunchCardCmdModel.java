@@ -189,7 +189,7 @@ public class PunchCardCmdModel implements Command<String> {
         }
 
         // 构建返回文案
-        StringBuilder returnText = new StringBuilder("打卡成功，");
+        StringBuilder returnText = new StringBuilder(DateUtil.getDate2Str("MM.dd",punchcardDate) + "打卡成功，");
         if (!StringUtils.isEmpty(weightLessText)) {
             returnText.append(weightLessText).append("，");
         }
