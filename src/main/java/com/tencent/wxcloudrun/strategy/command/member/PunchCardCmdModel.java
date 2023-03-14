@@ -17,6 +17,7 @@ import com.tencent.wxcloudrun.util.RegexUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -95,6 +96,7 @@ public class PunchCardCmdModel implements Command<String> {
     }
 
     @Override
+    @Transactional
     public ApiResponse execute(String commandRequest, JSONObject data, LoginInfo loginInfo) {
         String punchcardDate = data.getString("punchcardDate");
 

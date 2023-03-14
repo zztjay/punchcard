@@ -9,6 +9,7 @@ import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.util.StringUtil;
@@ -79,6 +80,7 @@ public class WeightSetCmd implements Command<String> {
     }
 
     @Override
+    @Transactional
     public ApiResponse execute(String commandRequest, JSONObject cmdData, LoginInfo loginInfo) {
         if (StringUtil.isNotEmpty(cmdData.getString("goal"))) { // 目标体重
             memberService.updateGoalWeight(loginInfo.getWxId(), loginInfo.getCampId(), cmdData.getString("goal"));

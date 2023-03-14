@@ -123,7 +123,7 @@ public class ControllerAspect {
             return result;
         } catch (Throwable e) {
             log.error("方法调用异常", e);
-            return ApiResponse.error("EXCEPTION", "系统异常");
+            return ApiResponse.error("EXCEPTION", "系统开小差了，请稍后再试！");
         } finally {
             LoginContext.destoryLoginContext();
             logInfo.append("-----Aspect 结束 耗时：").append(System.currentTimeMillis() - startTime).append(" ms-----");

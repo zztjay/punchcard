@@ -35,17 +35,20 @@ public class FullProductTest {
     public void test() {
 
 
-//        System.out.println(commandController.command("3.7日打卡\n" +
-//                "\uD83D\uDC49今日体重：138斤\n" +
-//                "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +
-//                "\uD83C\uDF5E早餐：豆浆，包子，全麦面包\n" +
-//                "\uD83C\uDF5A午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
-//                "\uD83C\uDF75晚餐：咖喱鸡肉饭\n" +
-//                "\uD83C\uDF49加餐：无  @打卡小助手"));
+
 //
 //        System.out.println(commandController.command("新人入群帮助"));
 //
         System.out.println(commandController.command("开启打卡统计"));
+//        System.out.println(commandController.command("关闭打卡统计"));
+
+        System.out.println(commandController.command("3.7日打卡\n" +
+                "\uD83D\uDC49今日体重：78斤\n" +
+                "⛹️\u200D♀️运动：走路500步，力量训练40分钟\n" +
+                "\uD83C\uDF5E早餐：豆浆，包子，全麦面包\n" +
+                "\uD83C\uDF5A午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "\uD83C\uDF75晚餐：咖喱鸡肉饭\n" +
+                "\uD83C\uDF49加餐：无"));
 
 //        Camp camp = campService.getCampById(8l);
 //        System.out.println(commandController.command("我的原始体重为150斤"));
