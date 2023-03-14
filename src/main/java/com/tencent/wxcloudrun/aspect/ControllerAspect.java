@@ -76,21 +76,16 @@ public class ControllerAspect {
         loginInfo.setWxGroupName(UriEncoder.decode(request.getHeader(CommonConstants.USER_WX_GROUP_NAME)));
 
         // 减脂营场景，设置减脂营信息
-        if(StringUtils.isNotEmpty(loginInfo.getGroupId())){
+        if(StringUtils.isNotEmpty(loginInfo.getGroupId()) && StringUtils.isNotEmpty(loginInfo.getWxId())){
             Camp camp = campService.getCampByGid(loginInfo.getGroupId());
             if(null != camp) {
                 loginInfo.setCampId(camp.getId());
-
                 //  静默用户加入减脂营
                 ApiResponse apiResponse = campService.isUserJoinCamp(loginInfo.getGroupId(),loginInfo.getWxId());
                 if(apiResponse.getCode().equals("USER_NOT_JOIN_CAMP") ){
                     campService.joinCamp(loginInfo.getCampId(),loginInfo.getWxName(),loginInfo.getWxId());
                 }
             }
-        }
-
-        if(StringUtils.isNotEmpty(loginInfo.getWxId())) {
-
             //  静默用户注册
             if (!userService.isUserRegister(loginInfo.getWxId())) {
                 User user = new User();
