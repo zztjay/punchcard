@@ -17,8 +17,4 @@ public class DinnerCmd extends AbstractFoodCmd {
         return "晚餐";
     }
 
-    @Override
-    public ApiResponse execute(String date, String commandRequest, JSONObject data, LoginInfo loginInfo) {
-        throw new IllegalArgumentException();
-    }
 }
