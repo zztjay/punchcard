@@ -36,16 +36,17 @@ public class JoinGroupHelpCmd implements Command<String> {
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
-        return new StringBuilder("欢迎加入，以下是打卡帮助：\n" +
-                "Step1： 输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，进行原始和目标体重信息设置\n" +
-                "Step2：请按打卡模版进行打卡，勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔，没有请输入“无”，或删除行\n" +
-                "今日体重：138斤\n" +
-                "运动：走路5000步，力量训练60分钟\n" +
-                "早餐：豆浆，包子，全麦面包\n" +
-                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
-                "晚餐：咖喱鸡肉饭\n" +
-                "加餐：无").toString();
+        return new StringBuilder("欢迎加入，以下是打卡帮助：\n\n" +
+                "Step1： 输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，进行原始和目标体重信息设置\n\n" +
+                "Step2：请按打卡模版进行打卡，勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔，没有请输入“无”，或删除行\n\n" +
+                "\uD83D\uDC49今日体重：138斤\n" +
+                "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +
+                "\uD83C\uDF5E早餐：豆浆，包子，全麦面包\n" +
+                "\uD83C\uDF5A午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "\uD83C\uDF75晚餐：咖喱鸡肉饭\n" +
+                "\uD83C\uDF49加餐：无").toString();
     }
+
 
     @Override
     public String commandName() {
@@ -68,6 +69,6 @@ public class JoinGroupHelpCmd implements Command<String> {
     }
 
     public static void main(String[] args) {
-        System.out.println(RegexUtils.getMatches("新人入群帮助","新人入群帮助"));
+        System.out.println(new JoinGroupHelpCmd().resultFormat(null,null));
     }
 }

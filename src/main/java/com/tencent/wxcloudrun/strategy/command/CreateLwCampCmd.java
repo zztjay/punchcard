@@ -53,12 +53,12 @@ public class CreateLwCampCmd implements Command<String> {
         return new StringBuilder("“群减肥打卡统计功能”开启成功，以下是打卡帮助：\n\n" +
                 "Step1：输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，并@打卡小助手，进行原始和目标体重信息设置\n\n" +
                 "Step2：按打卡模版进行打卡，并@打卡小助手，请勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔\n\n" +
-                "今日体重：138斤\n" +
-                "运动：走路5000步，力量训练60分钟\n" +
-                "早餐：豆浆，包子，全麦面包\n" +
-                "午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
-                "晚餐：咖喱鸡肉饭\n" +
-                "加餐：水果").toString();
+                "\uD83D\uDC49今日体重：138斤\n" +
+                "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +
+                "\uD83C\uDF5E早餐：豆浆，包子，全麦面包\n" +
+                "\uD83C\uDF5A午餐：西红柿炒鸡蛋，炒牛肉，米饭\n" +
+                "\uD83C\uDF75晚餐：咖喱鸡肉饭\n" +
+                "\uD83C\uDF49加餐：无").toString();
     }
 
     public static void main(String[] args) {

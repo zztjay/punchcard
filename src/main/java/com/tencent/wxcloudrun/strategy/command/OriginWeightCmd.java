@@ -61,7 +61,7 @@ public class OriginWeightCmd implements Command<String> {
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
-        return "设置成功，您的原始体重为" + data.getString("weight") + "斤!";
+        return "设置成功，您的原始体重为" + data.getString("weight") + "斤!\n";
     }
 
     @Override
@@ -71,7 +71,7 @@ public class OriginWeightCmd implements Command<String> {
 
     @Override
     public String commandReg() {
-        return "我的原始体重为" + heightNumRegex + "斤";
+        return "(我的)?原始体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
     }
 
     @Override
@@ -82,6 +82,12 @@ public class OriginWeightCmd implements Command<String> {
     @Override
     public List<Integer> authUserTypes() {
         return Arrays.asList(Member.ROLE_TYPE_NO_JOIN, Member.ROLE_TYPE_NORMAL, Member.ROLE_TYPE_CREATER);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(RegexUtils.getMatches(new OriginWeightCmd().commandReg(), "我的原始体重112斤" ));
+        System.out.println(RegexUtils.getMatches( new OriginWeightCmd().commandReg(), "我的原始体重为112斤"));
+        System.out.println(RegexUtils.getMatches( new OriginWeightCmd().commandReg(), "原始体重是112斤"));
     }
 
 }

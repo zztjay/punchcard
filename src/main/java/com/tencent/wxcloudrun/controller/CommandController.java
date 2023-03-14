@@ -44,7 +44,9 @@ public class CommandController {
         List<Command> commandModels = modelFatory.getModels(Command.class);
 
         // 匹配命令
+
         if (StringUtils.isNotEmpty(inputCmd)) {
+            StringBuilder responseText = new StringBuilder();
             for (Command commandModel : commandModels) {
                 if (commandModel.isMatch(inputCmd)) {
 
@@ -74,9 +76,10 @@ public class CommandController {
                     }
 
                     // 构建返回数据
-                    return ApiResponse.ok(commandModel.resultFormat(extractResult.getData(),LoginContext.getLoginInfo()));
+                    responseText.append(commandModel.resultFormat(extractResult.getData(),LoginContext.getLoginInfo()));
                 }
             }
+            return ApiResponse.ok(responseText.toString());
         }
 
         return ApiResponse.error("COMMAND_NOT_FOUND", "无法识别您的输入，请检查文本格式!");

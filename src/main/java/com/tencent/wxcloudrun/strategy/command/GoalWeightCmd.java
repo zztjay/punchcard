@@ -15,6 +15,8 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.tencent.wxcloudrun.constants.CmdRegexConstant.mutipleSpaceRegex;
+
 /**
  * 体重打卡
  *
@@ -57,7 +59,7 @@ public class GoalWeightCmd implements Command<String> {
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
-        return "设置成功，您的目标体重为" + data.getString("weight") + "斤!";
+        return "设置成功，您的目标体重为" + data.getString("weight") + "斤!\n";
     }
 
     @Override
@@ -67,7 +69,7 @@ public class GoalWeightCmd implements Command<String> {
 
     @Override
     public String commandReg() {
-        return "我的目标体重为" + heightNumRegex + "斤";
+        return "(我的)?目标体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
     }
 
     @Override

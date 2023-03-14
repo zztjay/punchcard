@@ -140,6 +140,11 @@ public class PunchCardCmdModel implements Command<String> {
 
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
+        
+        Date punchcardDate = DateUtil.getStr2SDate("punchcardDate");
+        if(punchcardDate.before(DateTime.now().withTimeAtStartOfDay().toDate())){
+            return new StringBuilder("补卡成功！").toString();
+        }
 
         // 累计打卡天数，累计减重xx斤，继续要加油
         int punchCardCount = punchCardService.count(loginInfo.getWxId(),
