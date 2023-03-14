@@ -10,6 +10,7 @@ import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.strategy.punchcard.AbstractWeightCmd;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -37,16 +38,22 @@ public class GoalWeightCmd implements Command<String> {
     @Override
     public ApiResponse<JSONObject> extractData(String inputCmd) {
         JSONObject data = new JSONObject();
+        List<String> matcheCmds = RegexUtils.getMatches(heightNumRegex, inputCmd);
+        if(matcheCmds.size() > 1){
+            return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT_CMD", "格式有误，请检查！\n" +
+                    "参考示例：\"" + examples().get(0) + "\"");
+        }
 
-        List<String> matches = RegexUtils.getMatches(heightNumRegex, inputCmd);
-        if (matches.size() == 0) {
+        // 提取数据
+        List<String> matcheDatas = RegexUtils.getMatches(heightNumRegex, matcheCmds.get(0));
+        if (matcheDatas.size() == 0) {
             return ApiResponse.error("EXTRACT_NO_WEIGHT", "格式有误，请检查！\n" +
                     "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matches.size() > 1) {
+        } else if (matcheDatas.size() > 1) {
             return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT", "格式有误，请检查！\n" +
                     "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matches.size() == 1) {
-            data.put("weight", matches.get(0));
+        } else if (matcheDatas.size() == 1) {
+            data.put("weight", matcheDatas.get(0));
         }
         return ApiResponse.ok(data);
     }

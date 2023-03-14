@@ -44,7 +44,6 @@ public class CommandController {
         List<Command> commandModels = modelFatory.getModels(Command.class);
 
         // 匹配命令
-
         if (StringUtils.isNotEmpty(inputCmd)) {
             StringBuilder responseText = new StringBuilder();
             for (Command commandModel : commandModels) {

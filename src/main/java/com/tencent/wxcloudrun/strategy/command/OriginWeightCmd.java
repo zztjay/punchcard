@@ -40,15 +40,22 @@ public class OriginWeightCmd implements Command<String> {
     public ApiResponse<JSONObject> extractData(String inputCmd) {
         JSONObject data = new JSONObject();
 
-        List<String> matches = RegexUtils.getMatches(heightNumRegex, inputCmd);
-        if (matches.size() == 0) {
+        // 提取命令
+        List<String> matcheCmds = RegexUtils.getMatches(heightNumRegex, inputCmd);
+        if(matcheCmds.size() > 1){
+            return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT_CMD", "格式有误，请检查！\n" +
+                    "参考示例：\"" + examples().get(0) + "\"");
+        }
+        // 提取数据
+        List<String> matcheDatas = RegexUtils.getMatches(heightNumRegex, matcheCmds.get(0));
+        if (matcheDatas.size() == 0) {
             return ApiResponse.error("EXTRACT_NO_WEIGHT", "格式有误，请检查！\n" +
                     "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matches.size() > 1) {
+        } else if (matcheDatas.size() > 1) {
             return ApiResponse.error("EXTRACT_TOO_MUCH_WEIGHT", "格式有误，请检查！\n" +
                     "参考示例：\"" + examples().get(0) + "\"");
-        } else if (matches.size() == 1) {
-            data.put("weight", matches.get(0));
+        } else if (matcheDatas.size() == 1) {
+            data.put("weight", matcheDatas.get(0));
         }
         return ApiResponse.ok(data);
     }
@@ -85,7 +92,7 @@ public class OriginWeightCmd implements Command<String> {
     }
 
     public static void main(String[] args) {
-        System.out.println(RegexUtils.getMatches(new OriginWeightCmd().commandReg(), "我的原始体重112斤" ));
+        System.out.println(RegexUtils.getMatches(new OriginWeightCmd().commandReg(), "我的原始体重112\n我的目标体重129斤" ));
         System.out.println(RegexUtils.getMatches( new OriginWeightCmd().commandReg(), "我的原始体重为112斤"));
         System.out.println(RegexUtils.getMatches( new OriginWeightCmd().commandReg(), "原始体重是112斤"));
     }
