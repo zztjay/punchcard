@@ -121,11 +121,11 @@ public class WeightSetCmd implements Command<String> {
     }
 
     private String goalRegx() {
-        return "(我的)?目标体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
+        return "(我的)?目标(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
     }
 
     private String originRegx() {
-        return "(我的)?原[始]?体重[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
+        return "(我的)?原[始]?(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
     }
 
     @Override
