@@ -54,7 +54,7 @@ public class CreateLwCampCmd implements Command<String> {
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
 
         return new StringBuilder("“群打卡统计功能”开启成功，以下是打卡帮助：\n\n" +
-                "Step1：输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，并@打卡小助手，进行原始和目标体重信息设置\n\n" +
+                "Step1：输入输入“原体重xx斤”和“目标xx斤”，并@打卡小助手，进行初始体重信息设置\n\n" +
                 "Step2：按打卡模版进行打卡，并@打卡小助手，请勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔\n\n" +
                 "\uD83D\uDC49今日体重：138斤\n" +
                 "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +

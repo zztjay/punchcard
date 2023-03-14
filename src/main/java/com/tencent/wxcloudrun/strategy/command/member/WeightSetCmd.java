@@ -31,9 +31,6 @@ public class WeightSetCmd implements Command<String> {
     @Resource
     MemberService memberService;
 
-    @Resource
-    CampService campService;
-
 
     @Override
     public boolean isMatch(String inputCmd) {
@@ -96,10 +93,10 @@ public class WeightSetCmd implements Command<String> {
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
         StringBuilder result = new StringBuilder("设置成功");
         if (StringUtil.isNotEmpty(data.getString("origin"))) {
-            result.append("，您的原始体重为").append(data.getString("origin")).append("斤");
+            result.append("，原体重").append(data.getString("origin")).append("斤");
         }
         if (StringUtil.isNotEmpty(data.getString("goal"))) {
-            result.append("，您的目标体重为").append(data.getString("goal")).append("斤");
+            result.append("，目标").append(data.getString("goal")).append("斤");
         }
         result.append("\n");
         return result.toString();
@@ -116,21 +113,21 @@ public class WeightSetCmd implements Command<String> {
     }
 
     public static void main(String[] args) {
-        System.out.println(RegexUtils.getMatches(new WeightSetCmd().commandReg(), "我的原始体重为 120斤\n" +
+        System.out.println(RegexUtils.getMatches(new WeightSetCmd().commandReg(), "我的原体重为 120斤\n" +
                 "我的目标体重为 100斤"));
     }
 
     private String goalRegx() {
-        return "(我的)?目标(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
+        return "目标(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "斤";
     }
 
     private String originRegx() {
-        return "(我的)?原[始]?(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "[斤]?";
+        return "原(体重)?[为是:：]?" + mutipleSpaceRegex + heightNumRegex + "斤";
     }
 
     @Override
     public String examples() {
-        return new StringBuilder("我的目标体重为100斤").append("\n").append("我的原体重为120斤").toString();
+        return new StringBuilder("原体重120.6斤").append("\n").append("目标100斤").toString();
     }
 
     @Override

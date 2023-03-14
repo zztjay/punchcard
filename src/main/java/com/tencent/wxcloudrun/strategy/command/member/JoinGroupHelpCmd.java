@@ -38,7 +38,7 @@ public class JoinGroupHelpCmd implements Command<String> {
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
         return new StringBuilder("欢迎加入，以下是打卡帮助：\n\n" +
-                "Step1： 输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，进行原始和目标体重信息设置\n\n" +
+                "Step1： 输入“原体重xx斤”和“目标xx斤”，进行初始体重信息设置\n\n" +
                 "Step2：请按打卡模版进行打卡，勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔，没有请输入“无”，或删除行\n\n" +
                 "\uD83D\uDC49今日体重：138斤\n" +
                 "⛹️\u200D♀️运动：走路5000步，力量训练60分钟\n" +
