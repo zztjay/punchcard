@@ -6,7 +6,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.service.CampService;
 import com.tencent.wxcloudrun.strategy.ModelFatory;
 import com.tencent.wxcloudrun.strategy.command.Command;
-import com.tencent.wxcloudrun.strategy.command.CreateLwCampCmd;
+import com.tencent.wxcloudrun.strategy.command.creater.CreateLwCampCmd;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +57,7 @@ public class CommandController {
 
                     // 一开始还没有减脂营，需要开启
                     if (commandModel.getClass() == CreateLwCampCmd.class && LoginContext.getCampId() == null) {
-                        return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启减肥打卡统计功能");
+                        return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启打卡统计功能");
                     }
 
                     // 检查命令权限

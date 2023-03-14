@@ -1,6 +1,5 @@
-package com.tencent.wxcloudrun.strategy.punchcard;
+package com.tencent.wxcloudrun.strategy.command.member.punchcard;
 
-import com.tencent.wxcloudrun.strategy.punchcard.AbstractFoodCmd;
 import org.springframework.stereotype.Component;
 
 /**

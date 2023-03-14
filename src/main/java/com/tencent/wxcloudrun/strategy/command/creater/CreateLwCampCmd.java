@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.strategy.command;
+package com.tencent.wxcloudrun.strategy.command.creater;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -7,7 +7,7 @@ import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Camp;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.service.CampService;
-import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
+import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 开启减肥打卡统计功能
+ * 开启打卡统计功能
  *
  * @Author：zhoutao
  * @Date：2023/3/7 12:19
@@ -50,7 +50,7 @@ public class CreateLwCampCmd implements Command<String> {
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
 
-        return new StringBuilder("“群减肥打卡统计功能”开启成功，以下是打卡帮助：\n\n" +
+        return new StringBuilder("“群打卡统计功能”开启成功，以下是打卡帮助：\n\n" +
                 "Step1：输入“我的原始体重为xx斤”和“我的目标体重为xx斤”，并@打卡小助手，进行原始和目标体重信息设置\n\n" +
                 "Step2：按打卡模版进行打卡，并@打卡小助手，请勿改变每一行的打卡标题（比如：“运动：”），打卡内容请用“，”分隔\n\n" +
                 "\uD83D\uDC49今日体重：138斤\n" +
@@ -67,18 +67,18 @@ public class CreateLwCampCmd implements Command<String> {
 
     @Override
     public String commandName() {
-        return "开启减肥打卡统计功能";
+        return "开启打卡统计";
     }
 
     @Override
     public String commandReg() {
-        return "[\\s]*开启减肥打卡统计功能[\\s]*";
+        return "[\\s]*开启打卡统计[\\s]*";
     }
 
 
     @Override
     public List<String> examples() {
-        return Arrays.asList("开启减肥打卡统计功能");
+        return Arrays.asList("开启打卡统计");
     }
 
     @Override

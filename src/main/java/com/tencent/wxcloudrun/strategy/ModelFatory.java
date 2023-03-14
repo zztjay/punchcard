@@ -1,10 +1,5 @@
 package com.tencent.wxcloudrun.strategy;
 
-import com.tencent.wxcloudrun.config.ApiResponse;
-import com.tencent.wxcloudrun.strategy.command.Command;
-import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
-import com.tencent.wxcloudrun.util.CmdRegexUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

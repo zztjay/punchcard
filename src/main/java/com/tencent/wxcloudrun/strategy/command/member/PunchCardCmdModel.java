@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.strategy.command;
+package com.tencent.wxcloudrun.strategy.command.member;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -8,10 +8,10 @@ import com.tencent.wxcloudrun.dao.PunchCardMapper;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
 import com.tencent.wxcloudrun.model.Record;
-import com.tencent.wxcloudrun.service.MemberService;
 import com.tencent.wxcloudrun.service.PunchCardService;
 import com.tencent.wxcloudrun.strategy.ModelFatory;
-import com.tencent.wxcloudrun.strategy.punchcard.PunchCardCmd;
+import com.tencent.wxcloudrun.strategy.command.Command;
+import com.tencent.wxcloudrun.strategy.command.member.punchcard.PunchCardCmd;
 import com.tencent.wxcloudrun.util.DateUtil;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -141,7 +141,7 @@ public class PunchCardCmdModel implements Command<String> {
     @Override
     public String resultFormat(JSONObject data, LoginInfo loginInfo) {
         
-        Date punchcardDate = DateUtil.getStr2SDate("punchcardDate");
+        Date punchcardDate = DateUtil.getStrToDate(DateUtil.DATE_FORMAT_PATTERN, data.getString("punchcardDate"));
         if(punchcardDate.before(DateTime.now().withTimeAtStartOfDay().toDate())){
             return new StringBuilder("补卡成功！").toString();
         }

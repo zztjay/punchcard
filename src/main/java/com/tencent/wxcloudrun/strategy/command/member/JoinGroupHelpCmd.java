@@ -1,9 +1,10 @@
-package com.tencent.wxcloudrun.strategy.command;
+package com.tencent.wxcloudrun.strategy.command.member;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.LoginInfo;
 import com.tencent.wxcloudrun.model.Member;
+import com.tencent.wxcloudrun.strategy.command.Command;
 import com.tencent.wxcloudrun.util.RegexUtils;
 import org.springframework.stereotype.Component;
 

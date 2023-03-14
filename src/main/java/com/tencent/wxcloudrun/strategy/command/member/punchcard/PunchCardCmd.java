@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.strategy.punchcard;
+package com.tencent.wxcloudrun.strategy.command.member.punchcard;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.config.ApiResponse;

@@ -56,7 +56,7 @@ public class CampService {
         // 检查群里是否重复创建
         List<Camp> activities = campMapper.query(new CampQuery(camp.getGroupId()));
         if (!CollectionUtils.isEmpty(activities)) {
-            return ApiResponse.error("CAMP_REPEATED_CREAT", "减肥打卡统计已开启");
+            return ApiResponse.error("CAMP_REPEATED_CREAT", "打卡统计功能已开启");
         }
         if (camp.getId() != null && camp.getId() > 0L) {
             campMapper.updateByPrimaryKey(camp);
@@ -71,7 +71,7 @@ public class CampService {
         Preconditions.checkArgument(StringUtils.isNotEmpty(groupId));
         Camp groupCamp = getCampByGid(groupId);
         if (null == groupCamp) {
-            return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启减肥打卡统计功能，请管理员创建");
+            return ApiResponse.error("GROUP_NO_CAMP", "本群还未开启打卡统计功能，请管理员创建");
         }
         boolean isJoin = membersMapper.selectByWxId(wxId, groupCamp.getId()) != null;
         if (isJoin) {
